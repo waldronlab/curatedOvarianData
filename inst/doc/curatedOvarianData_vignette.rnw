@@ -1,0 +1,131 @@
+%\VignetteKeywords{Database}
+%\VignetteDepends{curatedOvarianData}
+%\VignettePackage{curatedOvarianData}
+%\VignetteIndexEntry{curatedOvarianData}
+
+\input{preamble.tex}
+\title{\Huge{{\bf curatedOvarianData}}}
+\author{
+Benjamin Frederick Ganzfried, Markus Riester, Benjamin \\
+Haibe-Kains, Thomas Risch, Svitlana Tyekucheva, Ina Jazic,\\
+Victoria Xin Wang, Mahnaz Ahmadifar, Michael Birrer, \\
+Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron}
+\begin{document}
+\date{2012}
+
+\maketitle
+
+<<preliminaries,echo=FALSE,results=hide>>=
+library(curatedOvarianData)
+options(width=60)
+@ 
+
+
+\section{curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer
+Transcriptome}
+
+This package represents a manually curated data collection for gene expression
+meta-analysis of patients with ovarian cancer. This resource provides
+uniformly prepared microarray data with curated and documented clinical
+metadata.  It allows a computational user to efficiently identify studies and
+patient subgroups of interest for analysis and to run such analyses
+immediately without the challenges posed by harmonizing heterogeneous
+microarray technologies, study designs, expression data processing methods,
+and clinical data formats.  
+
+In this vignette, we give a short tour of the package and will show how to use
+it efficiently.
+
+\section{Example 1: Load TCGA data}
+Loading a single dataset is very easy. First we load the package:
+<<example1tcgastep1>>=
+library(curatedOvarianData)
+@
+To get a listing of all the datasets, use the \texttt{data} function:
+<<example1tcgastep2>>=
+data(package="curatedOvarianData")
+@
+Now to load the TCGA data, we use the \texttt{data} function again:
+<<example1tcgastep2>>=
+data(TCGA_eset)
+TCGA_eset
+@
+The datasets are provided as Bioconductor ExpressionSet objects and we refer
+to the Bioconductor documentation for users unfamiliar with this data
+structure. 
+
+\section{Example 2: Load datasets based on rules}
+For a meta-analysis, we typically want to filter datasets and patients to
+get a population of patients we are interested in. We provide a short but
+powerful R script that does the filtering and provides the data as a list of
+\texttt{ExpressionSet} objects. One can use this script within R by first sourcing a config
+file which specifies the filters, like the minimum numbers of patients in each
+dataset. It is also possible to filter samples by annotation, for example to remove
+early stage and normal samples. 
+<<example2loadstep1>>=
+source(system.file("extdata", 
+"patientselection.config",package="curatedOvarianData"))
+ls()
+@
+Now that we have defined the sample filter, we create a list of ExpressionSets
+by sourcing the \texttt{createEsetList.R} file:
+<<example2loadstep2>>=
+source(system.file("extdata", "createEsetList.R", package =
+"curatedOvarianData"))
+@
+It is also possible to run the script from the command line and then load the
+R data file within R:
+\begin{verbatim}
+R --vanilla "--args patientselection.config ovarian.eset.rda tmp.log"  < createEsetList.R 
+\end{verbatim}
+Now we have \Sexpr{length(esets)} datasets with samples that passed our filter in a list of
+\texttt{ExpressionSets} called \texttt{esets}:
+<<example2loadstep3>>=
+names(esets)
+@
+\section{Example 3: Validate the CXCL12 biomarker}
+Next we use the list of \Sexpr{length(esets)} datasets from the previous example and test if the
+expression of the CXCL12 gene is associated with overall survival. We define a
+function that will generate a forest plot for a given gene. It needs the
+overall survival information as \texttt{Surv} objects, which the
+\texttt{createEsetList.R} function already added in the \texttt{phenoData}
+slots of the ExpressionSets, accessible at the \texttt{y} label.  The
+resulting forest plot is shown for the CXCL12 gene in
+Figure~\ref{fig:example3:forest}.
+
+<<example3prepare>>=
+esets[[1]]$y
+forestplot <- function(esets, y="y", probeset, mlab="Overall",
+rma.method="FE", at=NULL,xlab="Hazard Ratio",...) {
+    require(metafor)
+    esets = esets[sapply(esets, function(x) probeset %in% featureNames(x))]
+    coefs = sapply(1:length(esets), function(i)
+    summary(coxph(esets[[i]][[y]]~exprs(esets[[i]])[probeset,]))$coefficients[c(1,3)])   
+    res.rma = metafor::rma(yi = coefs[1,], sei = coefs[2,], method=rma.method)
+    if (is.null(at)) at = log(c(0.25,1,4,20))
+    forest.rma(res.rma, xlab=xlab, slab=gsub("_eset$","",names(esets)),
+    atransf=exp, at=at, mlab=mlab,...)
+    return(res.rma)
+}
+@ 
+\begin{figure}
+<<example3plot,fig=TRUE>>=
+res <- forestplot(esets=esets,probeset="CXCL12",at=log(c(0.5,1,2,4)))
+@
+\caption{The database validates CXCL12 as predictive of survival in patients
+with ovarian cancer.  Forest plot of the expression of the chemokine CXCL12 as
+a univariate predictor of overall survival, using all \Sexpr{length(esets)} datasets with
+applicable expression and survival information.  A hazard ratio significantly
+larger than 1 indicates that patients with high CXCL12 levels had poor
+outcome. }
+\label{fig:example3:forest}
+\end{figure}
+
+\clearpage
+\appendix
+\section{Session Info}
+<<sessioninfo, echo=FALSE, results=tex>>=
+toLatex(sessionInfo())
+@
+
+\end{document}

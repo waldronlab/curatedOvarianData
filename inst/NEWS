@@ -1,0 +1,10 @@
+curatedOvarianData is a comprehensive resource for clinically-oriented
+investigation of the ovarian cancer transcriptome.  It provides
+clinically-annotated expression data for 2,908 patients at the time of
+publication, as 24 datasets originating from 22 studies, including
+publicly available microRNA and Affymetrix mRNA microarray data from
+The Cancer Genome Atlas (TCGA).  All probesets are mapped to official
+gene symbols using up-to-date maps.  All clinical annotations are
+hand-curated and machine-checked to ensure consistent syntax, allowing
+efficient selection of patient subsets with desired clinical
+annotations and characteristics.

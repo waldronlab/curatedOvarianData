@@ -1,0 +1,80 @@
+0.2.0: 
+* Added E-MTAB-386 (FFPE samples with survival data)
+* put MaxMean probe mappings in eset@featureData
+* put official Bioconductor platform names in eset@annotation
+
+0.2.1:
+* In the TCGA dataset, about 40 censored patients had days_to_death and days_to_recurrence labelled as NA instead of the follow-up time.
+* TCGA released updated clinical information for six patients
+* Levi reviewed Ina and Svitlana's double-checks, which resulted in minor changes to GSE18520 (for all patients changed debulking_status from NA -> optimal, stage IV -> III, and grade 4 -> 3)
+
+0.2.2:
+* replace GSE17260, which went missing in 0.2.1
+
+0.2.3:
+* Rename "celfile_run_date" and "batch_1" to "batch", and get rid of "batch_2" and "batch_3" so there is one consistent batch variable
+* consistently label missing debulking status as "NA" rather than sometimes as "unknown"
+* for FULL version, replace the missing probesets (probesets not found in the probeset-gene map were missing in previous versions)
+* addition of unit test for sample counts (not actually working yet)
+
+0.2.4:
+* TCGA: replaced batch variable which disappeared
+* GSE9891: corrected days_to_death and days_to_recurrence for three patients where an error occurred in copying uncurated data from supplemental PDF to create source .csv file.
+
+0.3.0:
+* Added GSE32062.GPL6480 and GSE32063 (Yoshihara et al. 2012), "Japanese datasets A and B" (issue #6).
+* GSE13876: Got rid of recurrence_status, which was just a copy
+  of vital_status.  No recurrence status is available for this study.
+* resolved missing ExperimentData for GSE2109 and GSE6822 (issue #9)
+* Added subtype information (serous) for PMID17290060, PMID19318476, PMID15897565 (issue #11)
+* Turned Markus's dataset-check test to R CMD check unit test
+
+0.4.0:
+* Added GSE30009 (Taqman qPCR dataset).
+
+0.4.1:
+* Added ages to GSE26712 (Bonome 08).
+* Use getPlatformsBiomaRt for GSE6822, to avoid using HGNC symbols directly from GPL80 [Hu6800]
+
+0.4.2:
+* 0.4.1 actually did not include ages for GSE26712, but this version
+does.
+
+0.5.0: 
+* disallow the use of "unknown" in template, use NA instead.
+Affected subtype, debulking, primarysite, arrayedsite.
+* added unit test which does syntax checking against template.
+
+0.99.1:
+* Fixed expO short title, now: expO, IGC 2005
+* Changed template to make distinction between T (1-3) of the TNM
+  staging, and FIGO tumorstage (I-IV), which we still code as 1-4.
+  This affected the metadata of every dataset which has stage.
+* Some datasets specified only early/late stage and high/low grade,
+  and some of these had been guessed (ie 2 for early, 4 for late).
+  Now, we DO NOT guess unspecified stage or grade, but curate these
+  under summarystage and summarygrade.  Affected GSE12470, GSE13876,
+  GSE18154, and GSE26712.
+* Added tumorstage based on calculation from T+M for GSE2109.
+* Remove curation files for GSE3149, GSE7463 which are not in curatedOvarianData.
+* Rescued some incorrectly recorded uncurated stage data in GSE6008 (1
+  and I both tumorstage 1).
+* Updated the BLAST reference genome to GRCh37.68 (from 64).  This
+  affects GSE12470_eset, GSE13876_eset, and GSE17260_eset.
+  Streamlined blast_gene_maps.R so this update can be made simply by
+  changing the ftp address of the genome map.
+* Updated BioMart probeset <--> gene maps (Oct 9, 2012).  Previous versions used 
+  BioMart as of June 27, 2012.
+* Publication metadata was missing from GSE30009 - no longer require complete cases for 
+  MIAME in createEsets.R.
+* Made test_counts.R unit test work for Normalizer and FULL versions.
+* When technical replicate samples have a piece of non-agreeing sample
+  metadata, set the value for this sample to NA.  Only affected one
+  grade 2 or 3 sample in GSE13876, which kept template syntax unit test
+  from passing.
+* added batch variable to PMID17290060 (Dressman et al.)
+
+0.99.2:
+* added tumorstage and summarystage to GSE26712 from additional spreadsheet.
+
+0.99.10: Addition of TCGA-mirna-8x15kv2 and GSE30161.
