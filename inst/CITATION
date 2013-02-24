@@ -1,0 +1,26 @@
+citHeader("To cite the curatedOvarianData package in publications use:")
+
+citEntry(entry="Article",
+    title = "curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome",
+    author = personList(as.person("Benjamin Frederick Ganzfried"),
+                        as.person("Markus Riester"),
+                        as.person("Benjamin Haibe-Kains"),
+                        as.person("Thomas Risch"),
+                        as.person("Svitlana Tyekucheva"),
+                        as.person("Ina Jazic"),
+                        as.person("Xin Victoria Wang"),
+                        as.person("Mahnaz Ahmadifar"),
+                        as.person("Michael Birrer"),
+                        as.person("Giovanni Parmigiani"),
+                        as.person("Curtis Huttenhower"),
+                        as.person("Levi Waldron")),
+    journal = "DATABASE (Oxford journals, accepted)",
+##    number = 00,
+##    pages = 70-84,
+    year = 2013,
+    textVersion =
+      paste("Benjamin Frederick Ganzfried, Markus Riester, Benjamin Haibe-Kains, Thomas Risch, Svitlana Tyekucheva, Ina Jazic, Xin Victoria Wang, Mahnaz Ahmadifar, Michael Birrer, Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron.",
+		"curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome,",
+        	"(accepted).")
+)
+

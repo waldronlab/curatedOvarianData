@@ -78,3 +78,33 @@ Affected subtype, debulking, primarysite, arrayedsite.
 * added tumorstage and summarystage to GSE26712 from additional spreadsheet.
 
 0.99.10: Addition of TCGA-mirna-8x15kv2 and GSE30161.
+
+0.99.20:
+* added percent_stromal_cells, percent_tumor_cells, and percent_normal_cells
+* added uncurated_author_metadata
+* removed T, N, M, chemo_response, inferred_chemo_response
+* renamed G to grade, subtype to histological_type
+* defined optimal debulking as <10mm for TCGA (was: No Macroscopic Disease)
+
+0.99.21:
+* When merging technical replicates, if a metadata field has "///" and
+  it disagrees between the replicates, try to merge rather than just
+  setting to NA.
+
+1.0.0:
+* per-dataset documentation fully automated, replaces
+  manually-generated documentation.
+* several additions to vignette - comBat example, Table 1 of
+  manuscript, and a section for non-R users.
+* added grade and summarygrade that was missing for Crijns (GSE13876).
+* added summarygrade to Bentink (E.MTAB.386) from paper (all high).
+* more metadata put in ExpressionSets: featureData(eset)@other now
+  contains rich platform information and warnings.  This all makes it
+  into automatic documentation.
+* Changed typo in experimentData(TCGA_eset)@name "Cancer GenomeAtlas
+  Network" to "Cancer Genome Atlas Network"
+* Fixed featureData slot of FULLVcuratedOvarianData, which was
+  previously missing gene symbols.
+
+1.0.1:
+* curate newly available grade for GSE17260 (Yoshihara 2010)

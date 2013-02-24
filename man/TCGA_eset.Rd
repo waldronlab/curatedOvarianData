@@ -1,122 +1,170 @@
-\name{TCGA_eset}
-\alias{TCGA_eset}
+\name{ TCGA_eset }
+\alias{ TCGA_eset }
 \docType{data}
-\title{Ovarian serous cystadenocarcinoma: Sample Counts and Findings}
-\description{The Cancer Genome Atlas}
-\usage{data(TCGA_eset)}
+\title{ Integrated genomic analyses of ovarian carcinoma. }
+\description{ A catalogue of molecular aberrations that cause ovarian cancer is critical for developing and deploying therapies that will improve patients' lives. The Cancer Genome Atlas project has analysed messenger RNA expression, microRNA expression, promoter methylation and DNA copy number in 489 high-grade serous ovarian adenocarcinomas and the DNA sequences of exons from coding genes in 316 of these tumours. Here we report that high-grade serous ovarian cancer is characterized by TP53 mutations in almost all tumours (96\%); low prevalence but statistically recurrent somatic mutations in nine further genes including NF1, BRCA1, BRCA2, RB1 and CDK12; 113 significant focal DNA copy number aberrations; and promoter methylation events involving 168 genes. Analyses delineated four ovarian cancer transcriptional subtypes, three microRNA subtypes, four promoter methylation subtypes and a transcriptional signature associated with survival duration, and shed new light on the impact that tumours with BRCA1/2 (BRCA1 or BRCA2) and CCNE1 aberrations have on survival. Pathway analyses suggested that homologous recombination is defective in about half of the tumours analysed, and that NOTCH and FOXM1 signalling are involved in serous ovarian cancer pathophysiology. }
+\usage{data( TCGA_eset )}
 \format{
+\preformatted{
+experimentData(eset):
+Experiment data
+  Experimenter name: Integrated genomic analyses of ovarian carcinoma. Nature 2011, 474:609-615. 
+  Laboratory: Cancer Genome Atlas Research Network 2011 
+  Contact information:  
+  Title: Integrated genomic analyses of ovarian carcinoma. 
+  URL:  
+  PMIDs: 21720365 
 
-Authors: The Cancer Genome Atlas.
+  Abstract: A 179 word abstract is available. Use 'abstract' method.
+  Information is available on: preprocessing 
+  notes:
+   platform_title:     
+      [HT_HG-U133A] Affymetrix HT Human Genome U133A Array
+   platform_shorttitle:     
+      Affymetrix HT_HG-U133A
+   platform_summary:     
+      hthgu133a
+   platform_manufacturer:     
+      Affymetrix
+   platform_distribution:     
+      commercial
+   platform_accession:     
+      GPL3921
+   warnings:     
+      The following samples are likely from specimens also used in GSE26712: TCG
+A.13.0725, TCGA.13.0885, TCGA.13.0887, TCGA.13.0890, TCGA.13.0886, TCGA.13
+.0714, TCGA.13.0727, TCGA.13.1817, TCGA.13.1499, TCGA.13.0883
 
-Title: Ovarian serous cystadenocarcinoma: Sample Counts and Findings.
+Preprocessing: rma
+featureData(eset):
+An object of class 'AnnotatedDataFrame'
+  featureNames: A1CF A2M ... ZZZ3 (12981 total)
+  varLabels: probeset gene
+  varMetadata: labelDescription
 
-Url: http://tcga-data.nci.nih.gov/tcga/tcgaCancerDetails.jsp?diseaseType=OV&diseaseName=Ovarian\%20serous\%20cystadenocarcinoma
-
-}
+}}
 \details{
-
-  Note that the TCGA dataset contains some samples replicated across
-  batches, but there are no clinical metadata associated with these
-  samples.  The following provides these sample pairs and the Pearson
-  correlation of their RMA-normalized expression profiles:
-
-  \preformatted{
-  name1         name2	      pearson correlation 
-  TCGA.24.2290  TCGA.13.2071  0.9969045 
-  TCGA.25.2392  TCGA.29.2432  0.9976206 
-  TCGA.25.2404  TCGA.36.2537  0.9978256 
-  TCGA.24.2262  TCGA.42.2591  0.9967085 
-  TCGA.24.2293  TCGA.23.2641  0.997569 
-  TCGA.25.2393  TCGA.29.2434  0.996287 
-  TCGA.59.2350  TCGA.36.2548  0.9968095 
-  TCGA.24.2295  TCGA.23.2643  0.9952585 
-  TCGA.09.2048  TCGA.04.1644  0.9967052 
-  TCGA.24.2271  TCGA.13.2057  0.9969408 
-  TCGA.25.2397  TCGA.61.2612  0.9957279 
-  TCGA.09.2049  TCGA.42.2582  0.9932573 
-  TCGA.24.2280  TCGA.13.2059  0.9937523 
-  TCGA.24.2298  TCGA.23.2647  0.9970841 
-  TCGA.25.2398  TCGA.36.2530  0.996212 
-  TCGA.09.2051  TCGA.42.2588  0.9971348 
-  TCGA.24.2288  TCGA.13.2065  0.9954178 
-  TCGA.29.2428  TCGA.36.2544  0.9964141 
-  TCGA.24.2289  TCGA.13.2066  0.9968514 
-  TCGA.36.2529  TCGA.29.1704  0.9976284 
-  TCGA.36.2532  TCGA.24.1852  0.997482 
-}
-
-rma normalization used from the rma bioconductor package.
-
-assayData: 12858 features, 570 samples.
-
-GEO_platform_accession: TCGA
-
-platform_summary: GPL4685
-
-biomart_ID: HT-HG_U133A affy_hg_u133a
-
-Overall survival time-to-event summary (in years): 
-
+\preformatted{
+assayData: 12981 features, 578 samples
+Platform type: hthgu133a
+Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
 
-records = 576.  n.max = 576. n.start = 576.  events = 0. median = NA. 0.95LCL = NA. 0.95UCL = NA.
+   21 observations deleted due to missingness 
+records   n.max n.start  events  median 0.95LCL 0.95UCL 
+ 557.00  557.00  557.00  290.00    3.73    3.45    4.06 
 
--------------------------------------------------------------------------------
-
-
+--------------------------- 
 Available sample meta-data: 
-
--------------------------------------------------------------------------------
+--------------------------- 
 
 alt_sample_name: 
-Length = 576.
-Class = character.
-Mode = character.
+   Length     Class      Mode 
+      578 character character 
 
 unique_patient_ID: 
-Length = 576.
-Class = character.
-Mode = character.
+   Length     Class      Mode 
+      578 character character 
 
 sample_type: 
-tumor = 576.
+adjacentnormal          tumor 
+             8            570 
 
-subtype: 
-ser = 576.
+histological_type: 
+ ser NA's 
+ 568   10 
 
 primarysite: 
-ov = 576.
+other    ov  NA's 
+    4   564    10 
 
-G: 
-1 = 6.
-2 = 68.
-3 = 485.
-4 = 1.
+summarygrade: 
+high  low NA's 
+ 480   75   23 
+
+summarystage: 
+early  late  NA's 
+   43   520    15 
+
+tumorstage: 
+   1    2    3    4 NA's 
+  16   27  436   84   15 
+
+substage: 
+   b    c NA's 
+  31  448   99 
+
+grade: 
+   1    2    3    4 NA's 
+   6   69  479    1   23 
+
+age_at_initial_pathologic_diagnosis: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  26.00   51.00   59.00   59.70   68.25   89.00      10 
+
+pltx: 
+   n    y NA's 
+  19  492   67 
+
+tax: 
+   n    y NA's 
+  43  468   67 
+
+neo: 
+   n NA's 
+ 511   67 
+
+days_to_tumor_recurrence: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    8.0   238.2   443.5   623.7   812.0  5480.0      56 
+
+recurrence_status: 
+norecurrence   recurrence 
+         279          299 
 
 days_to_death: 
-Min. = 8  Median = 1024   Mean = 1083.22  Max. = 4623
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+      8     349     881    1010    1446    5480      21 
+
+vital_status: 
+deceased   living     NA's 
+     290      270       18 
+
+site_of_tumor_first_recurrence: 
+                locoregional locoregional_plus_metastatic 
+                         153                            3 
+                  metastasis                         NA's 
+                         143                          279 
+
+primary_therapy_outcome_success: 
+  completeresponse    partialresponse progressivedisease      stabledisease 
+               318                 65                 41                 30 
+              NA's 
+               124 
+
+debulking: 
+   optimal suboptimal       NA's 
+       367        140         71 
+
+percent_normal_cells: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  0.000   0.000   0.000   2.385   0.000  55.000      19 
+
+percent_stromal_cells: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00    5.00   10.00   12.85   20.00   70.00      25 
+
+percent_tumor_cells: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+   0.00   75.00   85.00   80.64   90.00  100.00      22 
 
 batch: 
-Length = 570.
-Class = character.
-Mode = character.
+   9   11   12   13   14   15   17   18   19   21   22   24   27   40 NA's 
+  45   37   45   47   46   22   47   47   47   46   47   46    6   49    1 
 
-}
-\examples{
-data(TCGA_eset)
-## maybe str(TCGA_eset) ; plot(TCGA_eset) ...
+uncurated_author_metadata: 
+   Length     Class      Mode 
+      578 character character 
 
-if(require(affy)){
-  summary(TCGA_eset$recurrence_status)
-  time <- TCGA_eset$days_to_death / 365
-  cens <- ifelse(TCGA_eset$vital_status=="deceased",1,0)
-  library(survival)
-  fit <- survfit(Surv(time,cens)~-1)
-  fit          #for summary of survival
-  summary(fit)
-  plot(fit,xlab="Time (years)",ylab="Survivor function")
-  inverse.fit <- survfit(Surv(time,1-cens) ~ -1)
-  inverse.fit  #for summary of follow-up time
-}
-}
+}}
 \keyword{datasets}

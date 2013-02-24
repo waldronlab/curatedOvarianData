@@ -1,81 +1,109 @@
-\name{E.MTAB.386_eset}
-\alias{E.MTAB.386_eset}
+\name{ E.MTAB.386_eset }
+\alias{ E.MTAB.386_eset }
 \docType{data}
-\title{Angiogenic mRNA and microRNA gene expression signatures predict
-  overall survival in serous ovarian cancer (mRNA data only).}
-\description{Ovarian cancer is the fifth leading cause of cancer death for women in the U.S. and the seventh most fatal worldwide. Although ovarian cancer is notable for its initial sensitivity to platinum-based therapies, the vast majority of women eventually recurs and succumbs to increasingly platinum-resistant disease. Modern, targeted cancer drugs intervene in cell signaling pathways by compensating for their deregulation, and identifying these key mechanisms and pathways would greatly advance our ability to treat disease. In order to shed light on the molecular diversity of ovarian cancer, we performed comprehensive transcriptional profiling on 129 high grade, late stage serous ovarian cancers. We implemented a novel, re-sampling based version of the ISIS class discovery algorithm (rISIS: robust ISIS) and applied it to the entire set of ovarian cancer transcriptional profiles. rISIS identified a novel stratification of this disease into two groups with significantly different overall survival. Gene set enrichment analysis found strong support for the stratification by extracellular matrix, cell adhesion, and angiogenesis genes. Application of this 'angiogenesis' signature to independent, published ovarian cancer gene expression data confirms its prognostic potential. Additional support for this stratification is provided by micro-RNA expression profiles which exhibit statistically significant expression differences between the groups, and additional mechanistic analyses have allowed development of hypotheses relevant to directed therapeutic intervention for specific subclasses of the disease. In particular, the subgroup stratification we discovered may be relevant for identifying which patients may be best suited for anti-angiogenic therapies that are now being tested in clinical trials.
-}
-\usage{data(E.MTAB.386_eset)}
+\title{ Angiogenic mRNA and microRNA gene expression signature predicts a novel subtype of serous ovarian cancer. }
+\description{ Ovarian cancer is the fifth leading cause of cancer death for women in the U.S. and the seventh most fatal worldwide. Although ovarian cancer is notable for its initial sensitivity to platinum-based therapies, the vast majority of patients eventually develop recurrent cancer and succumb to increasingly platinum-resistant disease. Modern, targeted cancer drugs intervene in cell signaling, and identifying key disease mechanisms and pathways would greatly advance our treatment abilities. In order to shed light on the molecular diversity of ovarian cancer, we performed comprehensive transcriptional profiling on 129 advanced stage, high grade serous ovarian cancers. We implemented a, re-sampling based version of the ISIS class discovery algorithm (rISIS: robust ISIS) and applied it to the entire set of ovarian cancer transcriptional profiles. rISIS identified a previously undescribed patient stratification, further supported by micro-RNA expression profiles, and gene set enrichment analysis found strong biological support for the stratification by extracellular matrix, cell adhesion, and angiogenesis genes. The corresponding "angiogenesis signature" was validated in ten published independent ovarian cancer gene expression datasets and is significantly associated with overall survival. The subtypes we have defined are of potential translational interest as they may be relevant for identifying patients who may benefit from the addition of anti-angiogenic therapies that are now being tested in clinical trials. }
+\usage{data( E.MTAB.386_eset )}
 \format{
+\preformatted{
+experimentData(eset):
+Experiment data
+  Experimenter name: Bentink S, Haibe-Kains B, Risch T, Fan J-B, Hirsch MS, Holton K, Rubio R, April C, Chen J, Wickham-Garcia E, Liu J, Culhane A, Drapkin R, Quackenbush J, Matulonis UA: Angiogenic mRNA and microRNA gene expression signature predicts a novel subtype of serous ovarian cancer. PLoS ONE 2012, 7:e30269. 
+  Laboratory: Bentink, Matulonis 2012 
+  Contact information:  
+  Title: Angiogenic mRNA and microRNA gene expression signature predicts a novel subtype of serous ovarian cancer. 
+  URL:  
+  PMIDs: 22348002 
 
-Authors: Stefan Bentink, John Quackenbush, Jian-Bing Fan, Michelle S. Hirsch, Kristina Holton, Renee Rubio, Craig April, Jing Chen, Eliza Wickham-Garcia, Joyce Liu, Aedin Culhane, Ronny Drapkin, and Ursula A. Matulonis.
+  Abstract: A 212 word abstract is available. Use 'abstract' method.
+  Information is available on: preprocessing 
+  notes:
+   platform_title:     
+      Illumina humanRef-8 v2.0 expression beadchip
+   platform_shorttitle:     
+      Illumina humanRef-8 v2.0
+   platform_summary:     
+      illuminaHumanv2
+   platform_manufacturer:     
+      Illumina
+   platform_distribution:     
+      commercial
+   platform_accession:     
+      GPL6104
 
-Contact: John Quackenbush, Stefan Bentink <bentink@jimmy.harvard.edu>, Ursula A Matulonis <ursula_matulonis@dfci.harvard.edu>
+Preprocessing: default
+featureData(eset):
+An object of class 'AnnotatedDataFrame'
+  featureNames: A2M A4GALT ... ZZEF1 (10327 total)
+  varLabels: probeset gene
+  varMetadata: labelDescription
 
-Title: Angiogenic mRNA and microRNA gene expression signatures predict overall survival in serous ovarian cancer.
-
-Url: http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-386
-
-PubMedID: 22348002
-}
+}}
 \details{
-Platforms used: A-MEXP-1811 - Illumina Human microRNA MI_V1_R0_XS0000122-MAP & A-MEXP-931 - Illumina HumanRef-8 v2 Expression BeadChip.
-
-
-Overall survival time-to-event summary (in years): 
-
+\preformatted{
+assayData: 10327 features, 129 samples
+Platform type: illuminaHumanv2
+Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
 
----------------------------------------------------------------------------------
+records   n.max n.start  events  median 0.95LCL 0.95UCL 
+ 129.00  129.00  129.00   73.00    3.51    2.68    4.13 
 
-
+--------------------------- 
 Available sample meta-data: 
+--------------------------- 
 
----------------------------------------------------------------------------------
+unique_patient_ID: 
+   Length     Class      Mode 
+      129 character character 
 
-alt_sample_name: 
-Length = 141.
-Class = character.
-Mode = character.
+sample_type: 
+tumor 
+  129 
 
-sample_type:
-tumor = 141.
+histological_type: 
+ser 
+129 
 
-subtype:
-ser = 141.
-   
 primarysite: 
-ov = 141.
+ ov 
+129 
+
+summarygrade: 
+high 
+ 129 
 
 summarystage: 
-late = 140. NA's = 1.
+early  late 
+    1   128 
 
-tumorstage:
-3 = 118. 4 = 22. NA's = 1.
+tumorstage: 
+  2   3   4 
+  1 109  19 
 
 substage: 
-a = 4.    b = 14. c = 101. NA's = 22.
+   a    b    c NA's 
+   5   12   93   19 
 
 age_at_initial_pathologic_diagnosis: 
-Min. = 21.21  Median = 66.42  Mean = 60.84  Max. = 95.13  
- 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  21.00   50.00   66.00   60.71   72.00   95.00 
+
 days_to_death: 
-Min. = 3.9  Median =  920.1  Mean = 1039.36  Max. = 2724 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    3.9   516.9   917.1  1007.0  1401.0  2724.0 
 
 vital_status: 
-deceased = 81. living = 60. 
+deceased   living 
+      73       56 
 
 debulking: 
-optimal = 34. suboptimal = 107. 
-}
-\source{
-http://www.ebi.ac.uk/arrayexpress/experiments/E-MTAB-386
-}
-\examples{
-data(E.MTAB.386_eset)
-## maybe str(GSE12418_eset) ; plot(GSE12418_eset) ...
-if(require(affy)){
-  summary(E.MTAB.386_eset$os_binary)
-}
-}
+   optimal suboptimal       NA's 
+        98         28          3 
+
+uncurated_author_metadata: 
+   Length     Class      Mode 
+      129 character character 
+
+}}
 \keyword{datasets}

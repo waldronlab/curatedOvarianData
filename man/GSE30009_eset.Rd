@@ -1,110 +1,109 @@
-\name{GSE30009_eset}
-\alias{GSE30009_eset}
+\name{ GSE30009_eset }
+\alias{ GSE30009_eset }
 \docType{data}
-\title{Multidrug Resistance-Linked Gene Signature Predicts Overall Survival of Patients with Primary Ovarian Serous Carcinoma}
-\description{qRT-PCR dataset.  This study assesses the ability of multidrug resistance (MDR)-associated gene expression patterns to predict survival in patients with newly diagnosed carcinoma of the ovary. The scope of this research differs substantially from that of previous reports, as a very large set of genes was evaluated whose expression has been shown to affect response to chemotherapy.}
-
-\usage{data(GSE30009_eset)}
+\title{ Multidrug resistance-linked gene signature predicts overall survival of patients with primary ovarian serous carcinoma. }
+\description{ This study assesses the ability of multidrug resistance (MDR)-associated gene expression patterns to predict survival in patients with newly diagnosed carcinoma of the ovary. The scope of this research differs substantially from that of previous reports, as a very large set of genes was evaluated whose expression has been shown to affect response to chemotherapy.We applied a customized TaqMan low density array, a highly sensitive and specific assay, to study the expression profiles of 380 MDR-linked genes in 80 tumor specimens collected at initial surgery to debulk primary serous carcinoma. The RNA expression profiles of these drug resistance genes were correlated with clinical outcomes.Leave-one-out cross-validation was used to estimate the ability of MDR gene expression to predict survival. Although gene expression alone does not predict overall survival (OS; P = 0.06), four covariates (age, stage, CA125 level, and surgical debulking) do (P = 0.03). When gene expression was added to the covariates, we found an 11-gene signature that provides a major improvement in OS prediction (log-rank statistic P < 0.003). The predictive power of this 11-gene signature was confirmed by dividing high- and low-risk patient groups, as defined by their clinical covariates, into four specific risk groups on the basis of expression levels.This study reveals an 11-gene signature that allows a more precise prognosis for patients with serous cancer of the ovary treated with carboplatin- and paclitaxel-based therapy. These 11 new targets offer opportunities for new therapies to improve clinical outcome in ovarian cancer. }
+\usage{data( GSE30009_eset )}
 \format{
+\preformatted{
+experimentData(eset):
+Experiment data
+  Experimenter name: Gillet JP, Calcagno AM, Varma S, Davidson B et al. Multidrug resistance-linked gene signature predicts overall survival of patients with primary ovarian serous carcinoma. Clin Cancer Res 2012 Jun 1;18(11):3197-206. 
+  Laboratory: Gillet, Gottesman 2012 
+  Contact information:  
+  Title: Multidrug resistance-linked gene signature predicts overall survival of patients with primary ovarian serous carcinoma. 
+  URL:  
+  PMIDs: 22492981 
 
-Note this is a qRT-PCR dataset, not microarray.
-  
-Authors:  	Gillet J, Calcagno AM, Varma S, Davidson B, Elstrand MB, Ganapathi R, Kamat A, Sood A, Ambudkar SV, Seiden M, Rueda B, Gottesman MM
+  Abstract: A 244 word abstract is available. Use 'abstract' method.
+  Information is available on: preprocessing 
+  notes:
+   platform_title:     
+      TaqMan qRT-PCR Homo sapiens Low-Density Array 380
+   platform_shorttitle:     
+      TaqMan qRT-PCR
+   platform_summary:     
+      NA
+   platform_manufacturer:     
+      TaqMan
+   platform_distribution:     
+      custom
+   platform_accession:     
+      GPL13728
 
-Contact: Jean-Pierre Gillet <gilletjp@mail.nih.gov>
+Preprocessing: default
+featureData(eset):
+An object of class 'AnnotatedDataFrame'
+  featureNames: ABCA1 ABCA10 ... XRCC6 (359 total)
+  varLabels: probeset gene
+  varMetadata: labelDescription
 
-Title: Multidrug resistance-linked gene signature predicts overall survival of patients with primary ovarian serous carcinoma.
-
-Url: http://pubget.com/search?q=22492981
-
-PubMedID: 22492981
-}
+}}
 \details{
-  \preformatted{
-Platform used: TaqMan qRT-PCR Homo sapiens Low-Density Array 380
+\preformatted{
+assayData: 359 features, 103 samples
+Platform type: NA
+Overall survival time-to-event summary (in years):
+Call: survfit(formula = Surv(time, cens) ~ -1)
 
-Processed data here are those provided by the original study authors.
+records   n.max n.start  events  median 0.95LCL 0.95UCL 
+ 103.00  103.00  103.00   57.00    3.42    2.92    5.34 
 
-assayData: 380 features, 103 samples.
-
-GEO_platform_accession: GPL13728
-
-
----------------------------------------------------------------------------------
-
+--------------------------- 
 Available sample meta-data: 
+--------------------------- 
 
----------------------------------------------------------------------------------
+alt_sample_name: 
+   Length     Class      Mode 
+      103 character character 
 
-sample_type
+sample_type: 
 tumor 
   103 
 
-subtype
+histological_type: 
 clearcell       ser 
         1       102 
 
-summarygrade
-high  low 
-  92    9 
+summarygrade: 
+high  low NA's 
+  92    9    2 
 
-summarystage
+summarystage: 
 late 
  103 
 
-T   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  3.000   3.000   3.000   3.204   3.000   4.000 
+tumorstage: 
+ 3  4 
+82 21 
 
-substage
- b  c 
- 2 60 
+substage: 
+   b    c NA's 
+   2   60   41 
 
-G   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  1.000   3.000   3.000   2.871   3.000   3.000       2 
+grade: 
+   1    2    3 NA's 
+   4    5   92    2 
 
-age_at_initial_pathologic_diagnosis   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+age_at_initial_pathologic_diagnosis: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   30.00   56.00   61.00   62.45   71.50   87.00 
 
-days_to_death   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+days_to_death: 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
      24     598    1053    1156    1568    4748 
 
-vital_status
+vital_status: 
 deceased   living 
       57       46 
 
-debulking
+debulking: 
    optimal suboptimal 
-   81         22
-   }
-}
-\source{
-http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE30009
-}
-\examples{
-data(GSE30009_eset)
-meta.data <- pData(GSE30009_eset)
-for (i in 1:ncol(meta.data)){
-    if (!all(is.na(meta.data[[i]])) & length(unique(meta.data[[i]])) < length(meta.data[[i]])){
-        cat(colnames(meta.data)[i])
-        if(class(meta.data[[i]]) == "numeric" || class(meta.data[[i]]) == "integer"){
-            print(summary(meta.data[[i]]))
-        }else if(class(meta.data[[i]]) == "character" || class(meta.data[[i]]) == "factor" || class(meta.data[[i]]) == "logical"){
-            print(table(meta.data[[i]]))
-        }
-        cat("\n")
-    }
-}
-if(require(affy)){
-  summary(GSE30009_eset$vital_status)
-  time <- GSE30009_eset$days_to_death / 365
-  cens <- ifelse(GSE30009_eset$vital_status=="deceased",1,0)
-  library(survival)
-  fit <- survfit(Surv(time,cens)~-1)
-  fit          #for summary of survival
-  summary(fit)
-  plot(fit,xlab="Time (years)",ylab="Survivor function")
-  inverse.fit <- survfit(Surv(time,1-cens) ~ -1)
-  inverse.fit  #for summary of follow-up time
-}
-}
+        81         22 
+
+uncurated_author_metadata: 
+   Length     Class      Mode 
+      103 character character 
+
+}}
 \keyword{datasets}

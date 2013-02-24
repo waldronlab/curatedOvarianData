@@ -1,42 +1,49 @@
-\name{GSE30161_eset}
-\alias{GSE30161_eset}
+\name{ GSE30161_eset }
+\alias{ GSE30161_eset }
 \docType{data}
-\title{Multi-gene expression predictors of single drug responses to adjuvant chemotherapy in ovarian carcinoma: predicting platinum resistance}
-\description{We adapted and applied the previously-published COXEN algorithm to develop molecular predictors for therapeutic responses of patients' tumors based on expression signatures derived from the NCI-60 in vitro drug activities and genomic expression data. Genome-wide candidate biomarkers were first triaged by examining expression patterns of frozen and formalin-fixed paraffin embedded (FFPE) tissue samples. We then identify initial drug sensitivity biomarkers for carboplatin and paclitaxel, respectively. These biomarkers were further narrowed by examining concordant expression patterns between cell lines and a historical set of ovarian cancer patients. Multivariate predictors were obtained from the NCI-60 cell lines and refined using historical patient cohorts. To independent validate these molecular predictors, we performed genome-wide profiling on FFPE samples of 58 ovarian cancer patients obtained prior to adjuvant chemotherapy.}
-\usage{data(GSE30161_eset)}
+\title{ Multi-gene expression predictors of single drug responses to adjuvant chemotherapy in ovarian carcinoma: predicting platinum resistance. }
+\description{ Despite advances in radical surgery and chemotherapy delivery, ovarian cancer is the most lethal gynecologic malignancy. Standard therapy includes treatment with platinum-based combination chemotherapies yet there is no biomarker model to predict their responses to these agents. We here have developed and independently tested our multi-gene molecular predictors for forecasting patients' responses to individual drugs on a cohort of 55 ovarian cancer patients. To independently validate these molecular predictors, we performed microarray profiling on FFPE tumor samples of 55 ovarian cancer patients (UVA-55) treated with platinum-based adjuvant chemotherapy. Genome-wide chemosensitivity biomarkers were initially discovered from the in vitro drug activities and genomic expression data for carboplatin and paclitaxel, respectively. Multivariate predictors were trained with the cell line data and then evaluated with a historical patient cohort. For the UVA-55 cohort, the carboplatin, taxol, and combination predictors significantly stratified responder patients and non-responder patients (p = 0.019, 0.04, 0.014) with sensitivity = 91\%, 96\%, 93 and NPV = 57\%, 67\%, 67\% in pathologic clinical response. The combination predictor also demonstrated a significant survival difference between predicted responders and non-responders with a median survival of 55.4 months vs. 32.1 months. Thus, COXEN single- and combination-drug predictors successfully stratified platinum resistance and taxane response in an independent cohort of ovarian cancer patients based on their FFPE tumor samples. }
+\usage{data( GSE30161_eset )}
 \format{
+\preformatted{
+experimentData(eset):
+Experiment data
+  Experimenter name: Ferriss JS, Kim Y, Duska L, Birrer M, Levine DA, Moskaluk C,Theodorescu D, Lee JK 
+  Laboratory: Ferriss, Lee 2012 
+  Contact information:  
+  Title: Multi-gene expression predictors of single drug responses to adjuvant chemotherapy in ovarian carcinoma: predicting platinum resistance. 
+  URL:  
+  PMIDs: 22348014 
 
-Authors: Ferriss JS, Kim Y, Duska L, Birrer M, Levine DA, Moskaluk C, Theodorescu D, Lee JK.
+  Abstract: A 215 word abstract is available. Use 'abstract' method.
+  Information is available on: preprocessing 
+  notes:
+   platform_title:     
+      [HG-U133_Plus_2] Affymetrix Human Genome U133 Plus 2.0 Array
+   platform_shorttitle:     
+      Affymetrix HG-U133Plus2
+   platform_summary:     
+      hgu133plus2
+   platform_manufacturer:     
+      Affymetrix
+   platform_distribution:     
+      commercial
+   platform_accession:     
+      GPL570
 
-Lab: University of Virginia, Department of Public Health Sciences
+Preprocessing: frma
+featureData(eset):
+An object of class 'AnnotatedDataFrame'
+  featureNames: A1BG A1CF ... ZZZ3 (19093 total)
+  varLabels: probeset gene
+  varMetadata: labelDescription
 
-Contact: Youngchul Kim
-
-Title: Multi-gene expression predictors of single drug responses to adjuvant chemotherapy in ovarian carcinoma: predicting platinum resistance.
-
-PubMedID: 22348014
-
-}
+}}
 \details{
 \preformatted{
-Platform used: [HG-U133_Plus_2] Affymetrix Human Genome U133 Plus 2.0 Array.
-
-frma normalization used from the frma bioconductor package.
-
-assayData: 18708 features, 63 samples.
-
-GEO_platform_accession: GSE30161
-
-platform_summary: GPL570
-
-biomart_ID: HG-U133_Plus_2 affy_hg_u133_plus_2
-
 assayData: 19093 features, 58 samples
-
-         GEO_platform_accession platform_summary          biomart_ID
-GSE30161                 GPL570   HG-U133_Plus_2 affy_hg_u133_plus_2
-
-Overall survival time-to-event summary (in years): 
+Platform type: hgu133plus2
+Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
 
 records   n.max n.start  events  median 0.95LCL 0.95UCL 
@@ -54,7 +61,7 @@ sample_type:
 tumor 
    58 
 
-subtype: 
+histological_type: 
    Length     Class      Mode 
        58 character character 
 
@@ -74,7 +81,7 @@ substage:
  a  b  c 
  9 11 38 
 
-G: 
+grade: 
    1    2    3 NA's 
    2   19   33    4 
 
@@ -113,26 +120,14 @@ deceased   living
 debulking: 
    optimal suboptimal       NA's 
         26         30          2 
-}
 
-}
-\source{
-http://www.ncbi.nlm.nih.gov/projects/geo/query/acc.cgi?acc=GSE30161
-}
-\examples{
-data(GSE30161_eset)
-## maybe str(GSE30161_eset) ; plot(GSE30161_eset) ...
-if(require(affy)){
-  summary(GSE30161_eset$vital_status)
-  time <- GSE30161_eset$days_to_death / 365
-  cens <- ifelse(GSE30161_eset$vital_status=="deceased",1,0)
-  library(survival)
-  fit <- survfit(Surv(time,cens)~-1)
-  fit          #for summary of survival
-  summary(fit)
-  plot(fit,xlab="Time (years)",ylab="Survivor function")
-  inverse.fit <- survfit(Surv(time,1-cens) ~ -1)
-  inverse.fit  #for summary of follow-up time
-}
-}
+batch: 
+2009-10-07 2009-10-08 2009-10-09 2009-10-20 
+        28         18          8          4 
+
+uncurated_author_metadata: 
+   Length     Class      Mode 
+       58 character character 
+
+}}
 \keyword{datasets}

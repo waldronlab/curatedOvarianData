@@ -1,108 +1,125 @@
-\name{GSE17260_eset}
-\alias{GSE17260_eset}
+\name{ GSE17260_eset }
+\alias{ GSE17260_eset }
 \docType{data}
-\title{Gene expression profile for predicting survival in advanced-stage serous ovarian cancer across two independent datasets.}
-\description{Advanced-stage ovarian cancer patients are generally treated with platinum/taxane-based chemotherapy after primary debulking surgery. However, there is a wide range of outcomes for individual patients. Therefore, the clinicopathological factors alone are insufficient for predicting prognosis. Our aim is to identify a progression-free survival (PFS)-related molecular profile for predicting survival of patients with advanced-stage serous ovarian cancer.}
-\usage{data(GSE17260_eset)}
+\title{ Gene expression profile for predicting survival in advanced-stage serous ovarian cancer across two independent datasets. }
+\description{ Advanced-stage ovarian cancer patients are generally treated with platinum/taxane-based chemotherapy after primary debulking surgery. However, there is a wide range of outcomes for individual patients. Therefore, the clinicopathological factors alone are insufficient for predicting prognosis. Our aim is to identify a progression-free survival (PFS)-related molecular profile for predicting survival of patients with advanced-stage serous ovarian cancer.Advanced-stage serous ovarian cancer tissues from 110 Japanese patients who underwent primary surgery and platinum/taxane-based chemotherapy were profiled using oligonucleotide microarrays. We selected 88 PFS-related genes by a univariate Cox model (p<0.01) and generated the prognostic index based on 88 PFS-related genes after adjustment of regression coefficients of the respective genes by ridge regression Cox model using 10-fold cross-validation. The prognostic index was independently associated with PFS time compared to other clinical factors in multivariate analysis [hazard ratio (HR), 3.72; 95\% confidence interval (CI), 2.66-5.43; p<0.0001]. In an external dataset, multivariate analysis revealed that this prognostic index was significantly correlated with PFS time (HR, 1.54; 95\% CI, 1.20-1.98; p = 0.0008). Furthermore, the correlation between the prognostic index and overall survival time was confirmed in the two independent external datasets (log rank test, p = 0.0010 and 0.0008).The prognostic ability of our index based on the 88-gene expression profile in ridge regression Cox hazard model was shown to be independent of other clinical factors in predicting cancer prognosis across two distinct datasets. Further study will be necessary to improve predictive accuracy of the prognostic index toward clinical application for evaluation of the risk of recurrence in patients with advanced-stage serous ovarian cancer. }
+\usage{data( GSE17260_eset )}
 \format{
+\preformatted{
+experimentData(eset):
+Experiment data
+  Experimenter name: Yoshihara K, Tajima A, Yahata T, Kodama S, Fujiwara H, Suzuki M, Onishi Y, Hatae M, Sueyoshi K, Fujiwara H, Kudo Y, Kotera K, Masuzaki H, Tashiro H, Katabuchi H, Inoue I, Tanaka K.Gene expression profile for predicting survival in advanced-stage serous ovarian cancer across two independent datasets. PLoS One. 2010 Mar 12; 5(3):e9615. 
+  Laboratory: Yoshihara, Tanaka 2010 
+  Contact information:  
+  Title: Gene expression profile for predicting survival in advanced-stage serous ovarian cancer across two independent datasets. 
+  URL:  
+  PMIDs: 20300634 
 
-Authors: Yoshihara K, Tajima A, Yahata T, Kodama S, Fujiwara H, Suzuki M, Onishi Y, Hatae M, Sueyoshi K, Fujiwara H, Kudo Y, Kotera K, Masuzaki H, Tashiro H, Katabuchi H, Inoue I, Tanaka K.
+  Abstract: A 257 word abstract is available. Use 'abstract' method.
+  Information is available on: preprocessing 
+  notes:
+   platform_title:     
+      Agilent-012391 Whole Human Genome Oligo Microarray G4112A
+   platform_shorttitle:     
+      Agilent G4112A
+   platform_summary:     
+      hgug4112a
+   platform_manufacturer:     
+      Agilent
+   platform_distribution:     
+      commercial
+   platform_accession:     
+      GPL6848
 
-Lab : Department of Obstetrics and Gynecology, Niigata University Graduate School of Medical and Dental Sciences, Niigata, Japan.
+Preprocessing: default
+featureData(eset):
+An object of class 'AnnotatedDataFrame'
+  featureNames: A1CF A2LD1 ... ZZZ3 (19358 total)
+  varLabels: probeset gene
+  varMetadata: labelDescription
 
-Contact: tanaken@med.niigata-u.ac.jp
-
-Title: Gene expression profile for predicting survival in advanced-stage serous ovarian cancer across two independent datasets.
-
-Url: http://pubget.com/search?q=20300634
-
-PubMedID: 20300634
-}
-
+}}
 \details{
-Platform used: Agilent-012391 Whole Human Genome Oligo Microarray G4112A.
-
-Data normalization was performed in GeneSpring GX 10 (Agilent Technologies).  Processed data here are those provided by the original study authors.
-
-assayData: 18844 features, 110 samples.
-
-GEO_platform_accession: GSE17260.
-platform_summary = GPL6848.
-biomart_ID = Agilent G4112A agilent_wholegenome.
-
-Overall survival time-to-event summary (in years): 
+\preformatted{
+assayData: 19358 features, 110 samples
+Platform type: hgug4112a
+Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
 
-records = 110.00  n.max = 110.00  n.start = 110.00   events = 46.00   median = 4.44 0.95LCL = 4.03 0.95UCL = NA
+records   n.max n.start  events  median 0.95LCL 0.95UCL 
+ 110.00  110.00  110.00   46.00    4.44    4.03      NA 
 
----------------------------------------------------------------------------------
-
-
+--------------------------- 
 Available sample meta-data: 
+--------------------------- 
 
----------------------------------------------------------------------------------
-
-alt_sample_name:
-Length = 110.
-Class = character.
-Mode = character.
+alt_sample_name: 
+   Length     Class      Mode 
+      110 character character 
 
 sample_type: 
-tumor = 110.
+tumor 
+  110 
 
-subtype: 
-ser = 110.
+histological_type: 
+ser 
+110 
 
 primarysite: 
-ov = 110.
+ ov 
+110 
+
+summarygrade: 
+high  low 
+  43   67 
 
 summarystage: 
-late = 110.
+late 
+ 110 
 
-tumorstage:
-3 = 93. 4 = 17.
+tumorstage: 
+ 3  4 
+93 17 
 
 substage: 
-a = 6. b = 18. c = 69. NA's = 17.
+   a    b    c NA's 
+   6   18   69   17 
+
+grade: 
+ 1  2  3 
+26 41 43 
 
 pltx: 
-y = 110.
+  y 
+110 
 
-tax:
-y = 110.
+tax: 
+  y 
+110 
 
 days_to_tumor_recurrence: 
-Min. = 30.0  1st Qu. = 285.0  Median = 510.0   Mean = 673.9  3rd Qu. = 870.0  Max. = 2250.0 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   30.0   285.0   510.0   673.9   870.0  2250.0 
 
 recurrence_status: 
-norecurrence = 34.   recurrence = 76.
+norecurrence   recurrence 
+          34           76 
 
 days_to_death: 
-Min. = 30 1st Qu. =  660 Median = 915 Mean = 1086 3rd Qu. = 1530 Max. = 2430
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     30     660     915    1086    1530    2430 
 
 vital_status: 
-deceased = 46. living = 64.
+deceased   living 
+      46       64 
 
 debulking: 
-optimal = 57. suboptimal = 53.
-}
-\source{
-http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17260
-}
-\examples{
-data(GSE17260_eset)
-## maybe str(GSE17260_eset) ; plot(GSE17260_eset) ...
-if(require(affy)){
-  summary(GSE17260_eset$recurrence_status)
-  time <- GSE17260_eset$days_to_death / 365
-  cens <- ifelse(GSE17260_eset$vital_status=="deceased",1,0)
-  library(survival)
-  fit <- survfit(Surv(time,cens)~-1)
-  fit          #for summary of survival
-  summary(fit)
-  plot(fit,xlab="Time (years)",ylab="Survivor function")
-  inverse.fit <- survfit(Surv(time,1-cens) ~ -1)
-  inverse.fit  #for summary of follow-up time
-}
-}
+   optimal suboptimal 
+        57         53 
+
+uncurated_author_metadata: 
+   Length     Class      Mode 
+      110 character character 
+
+}}
 \keyword{datasets}
