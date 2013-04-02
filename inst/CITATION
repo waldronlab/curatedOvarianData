@@ -14,13 +14,16 @@ citEntry(entry="Article",
                         as.person("Giovanni Parmigiani"),
                         as.person("Curtis Huttenhower"),
                         as.person("Levi Waldron")),
-    journal = "DATABASE (Oxford journals, accepted)",
-##    number = 00,
-##    pages = 70-84,
-    year = 2013,
+volume = 2013, 
+year = 2013, 
+doi = "10.1093/database/bat013",
+abstract = "This article introduces a manually curated data collection for gene expression meta-analysis of patients with ovarian cancer and software for reproducible preparation of similar databases. This resource provides uniformly prepared microarray data for 2970 patients from 23 studies with curated and documented clinical metadata. It allows users to efficiently identify studies and patient subgroups of interest for analysis and to perform meta-analysis immediately without the challenges posed by harmonizing heterogeneous microarray technologies, study designs, expression data processing methods and clinical data formats. We confirm that the recently proposed biomarker CXCL12 is associated with patient survival, independently of stage and optimal surgical debulking, which was possible only through meta-analysis owing to insufficient sample sizes of the individual studies. The database is implemented as the curatedOvarianData Bioconductor package for the R statistical computing language, providing a comprehensive and flexible resource for clinically oriented investigation of the ovarian cancer transcriptome. The package and pipeline for producing it are available from http://bcb.dfci.harvard.edu/ovariancancer.Database URL: http://bcb.dfci.harvard.edu/ovariancancer",
+URL = "http://database.oxfordjournals.org/content/2013/bat013.abstract", 
+eprint = "http://database.oxfordjournals.org/content/2013/bat013.full.pdf+html", 
+journal = "Database",
     textVersion =
       paste("Benjamin Frederick Ganzfried, Markus Riester, Benjamin Haibe-Kains, Thomas Risch, Svitlana Tyekucheva, Ina Jazic, Xin Victoria Wang, Mahnaz Ahmadifar, Michael Birrer, Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron.",
 		"curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome,",
-        	"(accepted).")
+        	"Database 2013: bat013 doi:10.1093/database/bat013 published online April 2, 2013.")
 )
 

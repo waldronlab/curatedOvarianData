@@ -17,7 +17,6 @@ Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron}
 \tableofcontents
 
 <<preliminaries,echo=FALSE,results=hide>>=
-library(curatedOvarianData)
 library(sva)
 options(width=60)
 @ 
@@ -146,12 +145,15 @@ mlab="Overall", rma.method="FE", at=NULL,xlab="Hazard Ratio",...) {
 <<example3plot,fig=TRUE>>=
 res <- forestplot(esets=esets,probeset="CXCL12",at=log(c(0.5,1,2,4)))
 @
-\caption{The database confirms CXCL12 as prognostic of overall survival in patients
-with ovarian cancer.  Forest plot of the expression of the chemokine CXCL12 as
-a univariate predictor of overall survival, using all \Sexpr{length(esets)} datasets with
-applicable expression and survival information.  A hazard ratio significantly
-larger than 1 indicates that patients with high CXCL12 levels had poor
-outcome.  This plot is Figure 3 of the curatedOvarianData manuscript. }
+\caption{The database confirms CXCL12 as prognostic of overall
+  survival in patients with ovarian cancer.  Forest plot of the
+  expression of the chemokine CXCL12 as a univariate predictor of
+  overall survival, using all \Sexpr{length(esets)} datasets with
+  applicable expression and survival information.  A hazard ratio
+  significantly larger than 1 indicates that patients with high CXCL12
+  levels had poor outcome.  The p-value for the overall HR, found in
+  res\$pval, is \Sexpr{signif(res$pval, 2)}. This plot is Figure 3 of
+  the curatedOvarianData manuscript. }
 \label{fig:example3:forest}
 \end{figure}
 
@@ -183,7 +185,8 @@ res <- forestplot(esets=esets[idx.debulking & idx.tumorstage],
 \caption{Validation of CXCL12 as an independent predictor of survival. This
 figure shows a forest plot as in Figure~\ref{fig:example3:forest}, but the
 CXCL12 expression levels were adjusted for debulking status (optimal versus
-suboptimal) and tumor stage.}
+suboptimal) and tumor stage.  The p-value for the overall HR, found in
+  res\$pval, is \Sexpr{signif(res$pval, 2)}.}
 \label{fig:example4:forest}
 \end{figure}
 
@@ -195,10 +198,10 @@ res <- forestplot(esets=esets,probeset="CXCR4",at=log(c(0.5,1,2,4)))
 \caption{Up-regulation of CXCR4 is not associated with overall survival. This
 figure shows again a forest plot as in Figure~\ref{fig:example3:forest}, but
 here the association of mRNA expression levels of the CXCR4 receptor and
-overall survival is shown.}
+overall survival is shown.  The p-value for the overall HR, found in
+  res\$pval, is \Sexpr{signif(res$pval, 2)}.}
 \label{fig:example5:forest}
 \end{figure}
-
 
 \clearpage
 \section{Batch correction with ComBat}
