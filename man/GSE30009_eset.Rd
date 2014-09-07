@@ -30,6 +30,8 @@ Experiment data
       custom
    platform_accession:     
       GPL13728
+   platform_technology:     
+      qRT-PCR
 
 Preprocessing: default
 featureData(eset):
@@ -58,8 +60,8 @@ alt_sample_name:
       103 character character 
 
 sample_type: 
-tumor 
-  103 
+borderline      tumor 
+         1        102 
 
 histological_type: 
 clearcell       ser 

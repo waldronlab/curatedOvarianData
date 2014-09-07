@@ -30,18 +30,20 @@ Experiment data
       commercial
    platform_accession:     
       GPL6104
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A2M A4GALT ... ZZEF1 (10327 total)
+  featureNames: A2M A4GALT ... ZZEF1 (10357 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 10327 features, 129 samples
+assayData: 10357 features, 129 samples
 Platform type: illuminaHumanv2
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)

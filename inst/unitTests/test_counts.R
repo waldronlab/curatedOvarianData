@@ -14,7 +14,7 @@ test_counts <- function() {
                                sum(X$vital_status=="deceased",na.rm=TRUE)),
                      stringsAsFactors = FALSE)
     df = df[order(df$PMID, df$ncol, df$nrow),]
-    ## reference file was generated with the following commands on 1.0.0:
+    ## reference file was generated with the following commands on 1.2.0:
     ##  write.csv(df, file="../extdata/curatedOvarianData_counts.csv", quote=TRUE, row.names=FALSE)
     ## dfref <- read.csv("../extdata/curatedOvarianData_counts.csv", as.is=TRUE)
     dfref <- read.csv(system.file("extdata/curatedOvarianData_counts.csv", package = "curatedOvarianData"), as.is=TRUE)

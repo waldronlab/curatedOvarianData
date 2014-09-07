@@ -1,9 +1,9 @@
-\name{ TCGA_eset }
-\alias{ TCGA_eset }
+\name{ TCGA.RNASeqV2_eset }
+\alias{ TCGA.RNASeqV2_eset }
 \docType{data}
 \title{ Integrated genomic analyses of ovarian carcinoma. }
 \description{ A catalogue of molecular aberrations that cause ovarian cancer is critical for developing and deploying therapies that will improve patients' lives. The Cancer Genome Atlas project has analysed messenger RNA expression, microRNA expression, promoter methylation and DNA copy number in 489 high-grade serous ovarian adenocarcinomas and the DNA sequences of exons from coding genes in 316 of these tumours. Here we report that high-grade serous ovarian cancer is characterized by TP53 mutations in almost all tumours (96\%); low prevalence but statistically recurrent somatic mutations in nine further genes including NF1, BRCA1, BRCA2, RB1 and CDK12; 113 significant focal DNA copy number aberrations; and promoter methylation events involving 168 genes. Analyses delineated four ovarian cancer transcriptional subtypes, three microRNA subtypes, four promoter methylation subtypes and a transcriptional signature associated with survival duration, and shed new light on the impact that tumours with BRCA1/2 (BRCA1 or BRCA2) and CCNE1 aberrations have on survival. Pathway analyses suggested that homologous recombination is defective in about half of the tumours analysed, and that NOTCH and FOXM1 signalling are involved in serous ovarian cancer pathophysiology. }
-\usage{data( TCGA_eset )}
+\usage{data( TCGA.RNASeqV2_eset )}
 \format{
 \preformatted{
 experimentData(eset):
@@ -19,42 +19,38 @@ Experiment data
   Information is available on: preprocessing 
   notes:
    platform_title:     
-      [HT_HG-U133A] Affymetrix HT Human Genome U133A Array
+      [RNASeqV2] Illumina HiSeq RNA sequencing
    platform_shorttitle:     
-      Affymetrix HT_HG-U133A
+      Illumina HiSeq RNA sequencing
    platform_summary:     
-      hthgu133a
+      NA
    platform_manufacturer:     
-      Affymetrix
+      Illumina
    platform_distribution:     
-      commercial
+      sequencing
    platform_accession:     
-      GPL3921
+      NA
    platform_technology:     
-      in situ oligonucleotide
-   warnings:     
-      The following samples are likely from specimens also used in GSE26712: TCG
-A.13.0725, TCGA.13.0885, TCGA.13.0887, TCGA.13.0890, TCGA.13.0886, TCGA.13
-.0714, TCGA.13.0727, TCGA.13.1817, TCGA.13.1499, TCGA.13.0883
+      RNA sequencing
 
-Preprocessing: rma
+Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1CF A2M ... ZZZ3 (13104 total)
+  featureNames: ? A1BG ... ZZZ3 (20502 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 13104 features, 578 samples
-Platform type: hthgu133a
+assayData: 20502 features, 261 samples
+Platform type: NA
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
 
-   21 observations deleted due to missingness 
+   5 observations deleted due to missingness 
 records   n.max n.start  events  median 0.95LCL 0.95UCL 
- 557.00  557.00  557.00  290.00    3.73    3.45    4.06 
+ 256.00  256.00  256.00  143.00    3.62    3.19    4.03 
 
 --------------------------- 
 Available sample meta-data: 
@@ -62,111 +58,105 @@ Available sample meta-data:
 
 alt_sample_name: 
    Length     Class      Mode 
-      578 character character 
+      261 character character 
 
 unique_patient_ID: 
    Length     Class      Mode 
-      578 character character 
+      261 character character 
 
 sample_type: 
-healthy   tumor 
-      8     570 
+tumor 
+  261 
 
 histological_type: 
- ser NA's 
- 568   10 
+ser 
+261 
 
 primarysite: 
-other    ov  NA's 
-    4   564    10 
+other    ov 
+    1   260 
 
 summarygrade: 
 high  low NA's 
- 480   75   23 
+ 226   29    6 
 
 summarystage: 
 early  late  NA's 
-   43   520    15 
+   18   242     1 
 
 tumorstage: 
-   1    2    3    4 NA's 
-  16   27  436   84   15 
+   2    3    4 NA's 
+  18  209   33    1 
 
 substage: 
    b    c NA's 
-  31  448   99 
+  16  211   34 
 
 grade: 
    1    2    3    4 NA's 
-   6   69  479    1   23 
+   1   28  225    1    6 
 
 age_at_initial_pathologic_diagnosis: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  26.00   51.00   59.00   59.70   68.25   89.00      10 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  34.00   51.00   58.00   58.84   66.00   87.00 
 
 pltx: 
    n    y NA's 
-  19  492   67 
+  17  215   29 
 
 tax: 
    n    y NA's 
-  43  468   67 
+  17  215   29 
 
 neo: 
    n NA's 
- 511   67 
+ 232   29 
 
 days_to_tumor_recurrence: 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    8.0   238.2   443.5   623.7   812.0  5480.0      56 
+    9.0   225.0   426.5   585.3   755.0  5480.0      19 
 
 recurrence_status: 
 norecurrence   recurrence 
-         279          299 
+         123          138 
 
 days_to_death: 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-      8     349     881    1010    1446    5480      21 
+    9.0   341.8   878.0  1018.0  1446.0  5480.0       5 
 
 vital_status: 
 deceased   living     NA's 
-     290      270       18 
+     143      114        4 
 
 site_of_tumor_first_recurrence: 
-                locoregional locoregional_plus_metastatic 
-                         153                            3 
-                  metastasis                         NA's 
-                         143                          279 
+locoregional   metastasis         NA's 
+          82           56          123 
 
 primary_therapy_outcome_success: 
   completeresponse    partialresponse progressivedisease      stabledisease 
-               318                 65                 41                 30 
+               147                 30                 15                 15 
               NA's 
-               124 
+                54 
 
 debulking: 
    optimal suboptimal       NA's 
-       367        140         71 
+       171         60         30 
 
 percent_normal_cells: 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  0.000   0.000   0.000   2.385   0.000  55.000      19 
+  0.000   0.000   0.000   2.066   0.000  55.000       5 
 
 percent_stromal_cells: 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00    5.00   10.00   12.85   20.00   70.00      25 
+   0.00    5.00   10.00   11.43   15.00   70.00       4 
 
 percent_tumor_cells: 
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00   75.00   85.00   80.64   90.00  100.00      22 
-
-batch: 
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   9.00   13.00   17.00   18.55   22.00   40.00       1 
+   0.00   77.00   85.00   82.07   90.00  100.00       4 
 
 uncurated_author_metadata: 
    Length     Class      Mode 
-      578 character character 
+      261 character character 
 
 }}
 \keyword{datasets}

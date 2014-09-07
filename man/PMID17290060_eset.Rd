@@ -30,20 +30,22 @@ Experiment data
       commercial
    platform_accession:     
       GPL96
+   platform_technology:     
+      in situ oligonucleotide
    warnings:     
       This paper has been retracted.
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1CF A2M ... ZZZ3 (12981 total)
+  featureNames: A1CF A2M ... ZZZ3 (13104 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 12981 features, 117 samples
+assayData: 13104 features, 117 samples
 Platform type: hgu133a
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
@@ -104,12 +106,8 @@ debulking:
         63         54 
 
 batch: 
-2002-09-20 2002-10-23 2002-11-12 2002-12-16 2002-12-21 2003-01-03 2003-05-30 
-        10          8          9          1          3         11         10 
-2004-03-09 2004-03-16 2004-04-20 2004-05-18 2004-05-21 2004-05-27 2004-06-22 
-        16          6          5         15          7          7          1 
-2004-06-23 
-         8 
+   Length     Class      Mode 
+      117 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 

@@ -3,15 +3,24 @@
 %\VignettePackage{curatedOvarianData}
 %\VignetteIndexEntry{curatedOvarianData}
 
-\input{preamble.tex}
-\title{\Huge{{\bf curatedOvarianData}}}
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage{rotating}
+
+<<<style-Sweave, eval=TRUE, echo=FALSE, results=tex>>=
+BiocStyle::latex()
+@ 
+
+
+\bioctitle[curatedOvarianData]{curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome}
 \author{
 Benjamin Frederick Ganzfried, Markus Riester, Benjamin \\
 Haibe-Kains, Thomas Risch, Svitlana Tyekucheva, Ina Jazic,\\
 Victoria Xin Wang, Mahnaz Ahmadifar, Michael Birrer, \\
 Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron}
+
 \begin{document}
-\date{2013}
+\date{2014}
 
 \maketitle
 \tableofcontents
@@ -34,6 +43,10 @@ immediately without the challenges posed by harmonizing heterogeneous
 microarray technologies, study designs, expression data processing methods,
 and clinical data formats.  
 
+The \Biocpkg{curatedOvarianData} package is published in the journal
+DATABASE \cite{ganzfried2013}. Note the existence also of
+\Biocpkg{curatedCRCData} and \Biocpkg{curatedBladderData}.
+
 Please see http://bcb.dfci.harvard.edu/ovariancancer for alterative
 versions of this package, differing in how redundant probe sets are
 dealt with.
@@ -46,16 +59,16 @@ Loading a single dataset is very easy. First we load the package:
 <<example1tcgastep1>>=
 library(curatedOvarianData)
 @
-To get a listing of all the datasets, use the \texttt{data} function:
-<<example1tcgastep2>>=
+To get a listing of all the datasets, use the \Rfunction{data} function:
+<<example1tcgastep2, eval=FALSE>>=
 data(package="curatedOvarianData")
 @
-Now to load the TCGA data, we use the \texttt{data} function again:
+Now to load the TCGA data, we use the \Rfunction{data} function again:
 <<example1tcgastep2>>=
 data(TCGA_eset)
 TCGA_eset
 @
-The datasets are provided as Bioconductor \texttt{ExpressionSet} objects and
+The datasets are provided as \Bioconductor{} \Rclass{ExpressionSet} objects and
 we refer to the Bioconductor documentation for users unfamiliar with this data
 structure. 
 
@@ -63,7 +76,7 @@ structure.
 For a meta-analysis, we typically want to filter datasets and patients to
 get a population of patients we are interested in. We provide a short but
 powerful R script that does the filtering and provides the data as a list of
-\texttt{ExpressionSet} objects. One can use this script within R by first sourcing a config
+\Rclass{ExpressionSet} objects. One can use this script within R by first sourcing a config
 file which specifies the filters, like the minimum numbers of patients in each
 dataset. It is also possible to filter samples by annotation, for example to remove
 early stage and normal samples. 
@@ -84,12 +97,28 @@ Here strict.checking is FALSE, meaning that samples not annotated for
 the variables in these rules are allowed to pass the filter.  If
 strict.checking == TRUE, samples missing this annotation will be
 removed.
+
+\subsection{Cleaning of duplicate samples}
+The patientselection.config file loaded above contains several objects
+indicating which samples were removed for QC and duplicate cleaning by
+Waldron \emph{et al.} \cite{waldron2014}: 
+
+\begin{itemize}
+  \item tcga.lowcor.outliers: two profiles identified in the TCGA dataset with anomolously low correlation to other ovc profiles
+  \item duplicates: samples blacklisted because they contain
+      duplicates.  In the case of duplicates, generally
+      better-annotated samples, and samples from more recent studies,
+      were kept.
+  \item remove.samples: the above to vectors of samples concatenated
+\end{itemize}
+
 <<showls>>=
-sapply(ls(), get)
+#remove.samples and duplicates are too voluminous:
+sapply(ls(), function(x) if(!x %in% c("remove.samples", "duplicates")) print(get(x)))
 @ 
 
 Now that we have defined the sample filter, we create a list of
-\texttt{ExpressionSets} by sourcing the \texttt{createEsetList.R} file:
+\Rclass{ExpressionSet} objects by sourcing the \file{createEsetList.R} file:
 <<example2loadstep2>>=
 source(system.file("extdata", "createEsetList.R", package =
 "curatedOvarianData"))
@@ -100,7 +129,7 @@ R data file within R:
 R --vanilla "--args patientselection.config ovarian.eset.rda tmp.log"  < createEsetList.R 
 \end{verbatim}
 Now we have \Sexpr{length(esets)} datasets with samples that passed our filter in a list of
-\texttt{ExpressionSets} called \texttt{esets}:
+\Rclass{ExpressionSet} objects called \texttt{esets}:
 <<example2loadstep3>>=
 names(esets)
 @
@@ -111,9 +140,9 @@ overall survival.  CXCL12/CXCR4 is a chemokine/chemokine receptor axis that
 has previously been shown to be directly involved in cancer pathogenesis.  
 
 We first define a function that will generate a forest plot for a given gene. It
-needs the overall survival information as \texttt{Surv} objects, which the
-\texttt{createEsetList.R} function already added in the \texttt{phenoData}
-slots of the \texttt{ExpressionSets}, accessible at the \texttt{y} label.  The
+needs the overall survival information as \Rclass{Surv} objects, which the
+\file{createEsetList.R} function already added in the \texttt{phenoData}
+slots of the \Rclass{ExpressionSet} objects, accessible at the \texttt{y} label.  The
 resulting forest plot is shown for the CXCL12 gene in
 Figure~\ref{fig:example3:forest}.
 
@@ -140,6 +169,7 @@ mlab="Overall", rma.method="FE", at=NULL,xlab="Hazard Ratio",...) {
     return(res.rma)
 }
 @ 
+
 \begin{figure}
 \centering
 <<example3plot,fig=TRUE>>=
@@ -164,10 +194,10 @@ stage. We first filter the datasets without debulking and stage information:
 
 <<filterdatasets>>=
 idx.tumorstage <- sapply(esets, function(X) 
-    sum(!is.na(X$tumorstage))) > 0
+    sum(!is.na(X$tumorstage)) > 0 & length(unique(X$tumorstage)) > 1)
 
 idx.debulking <- sapply(esets, function(X) 
-    sum(X$debulking=="suboptimal",na.rm=TRUE)) > 0
+    sum(X$debulking=="suboptimal",na.rm=TRUE)) > 0 
 @ 
 
 In Figure~\ref{fig:example4:forest}, we see that CXCL12 stays significant after
@@ -207,9 +237,9 @@ overall survival is shown.  The p-value for the overall HR, found in
 \section{Batch correction with ComBat}
 
 If datasets are merged, it is typically recommended to remove a very likely
-batch effect. We will use the ComBat \citep{Johnson:2007} method, implemented
-for example in the SVA Bioconductor package \citep{sva}.  To combine two ExpressionSet
-objects, we can use the \texttt{combine()} function. This function will fail
+batch effect. We will use the ComBat \cite{Johnson:2007} method, implemented
+for example in the SVA Bioconductor package \cite{sva}.  To combine two ExpressionSet
+objects, we can use the \Rfunction{combine()} function. This function will fail
 when the two ExpressionSets have conflicting annotation slots, for example
 \texttt{annotation} when the platforms differ. We write a simple
 \texttt{combine2} function which only considers the \texttt{exprs} and
@@ -254,9 +284,77 @@ boxplot(combat_edata)
 \end{figure}
 
 \clearpage
-\bibliographystyle{plainnat}
-\bibliography{curatedOvarianData_vignette}
-\appendix
+\section{Non-specific probe sets}
+
+In the standard version of curatedOvarianData (the version available on
+Bioconductor), we collapse manufacturer probesets to official HGNC symbols
+using the Biomart database. Some probesets are mapped to multiple HGNC symbols
+in this database. For these probesets, we provide all the symbols. For example 
+\texttt{220159\_at} maps to \textit{ABCA11P} and \textit{ZNF721} and we
+provide \texttt{ABCA11P///ZNF721} as probeset name. If you have an array of
+gene symbols for which you want to access the expression data, "ABCA11P" would
+not be found in curatedOvarianData in this example. 
+
+The script createEsetList.R provides three methods to deal with
+non-specific probe sets by setting the variable $probes.not.mapped.uniquely$ to:
+
+\begin{itemize}
+   \item  "keep":  leave as-is, these have "///" in gene names,
+   \item  "drop":  drop any non-uniquely mapped features, or
+   \item "split":  split non-uniquely mapped features to one per row.
+     If this creates duplicate rows for a gene, those rows are
+     averaged.
+\end{itemize}
+
+This feature uses the following function to create a new ExpressionSet,
+in which both \textit{ZNF721} and \textit{ABCA11P} are features with
+identical expression data:
+
+<<expand>>=
+expandProbesets <- function (eset, sep = "///") 
+{
+    x <- lapply(featureNames(eset), function(x) strsplit(x, sep)[[1]])
+    eset <- eset[order(sapply(x, length)), ]
+    x <- lapply(featureNames(eset), function(x) strsplit(x, sep)[[1]])
+    idx <- unlist(sapply(1:length(x), function(i) rep(i, length(x[[i]]))))
+    xx <- !duplicated(unlist(x))
+    idx <- idx[xx]
+    x <- unlist(x)[xx]
+    eset <- eset[idx, ]
+    featureNames(eset) <- x
+    eset
+}
+
+X <- TCGA_eset[head(grep("///", featureNames(TCGA_eset))),]
+exprs(X)[,1:3]
+exprs(expandProbesets(X))[,1:3]
+@
+
+\section{FULLVcuratedOvarianData}
+
+In curatedOvarianData, probesets mapping to the same gene symbol are
+merge by selecting the probeset with maximum mean across all studies
+of a given platform.  You can see which representative probeset was chosen by looking at the featureData of the Expressionset, e.g.:
+
+<<featureData>>=
+head(pData(featureData(GSE18520_eset)))
+@ 
+
+The full, unmerged ExpressionSets are available through the
+FULLVcuratedOvarianData package at
+http://bcb.dfci.harvard.edu/ovariancancer/.  Probeset to gene maps are
+again provided in the featureData of those \Robject{ExpressionSet}s.
+Where official \Bioconductor annotation packages are available for the
+array, these are stored in the \Robject{ExpressionSet} annotation
+slots, e.g.:
+
+<<annotationeg>>=
+annotation(GSE18520_eset)
+@ 
+
+so that standard filtering methods such as \Rfunction{nsFilter} will
+work by default.
+
 \section{Available Clinical Characteristics}
 <<loadallsamples, echo=FALSE,results=hide>>=
 rm(list=ls())
@@ -354,5 +452,8 @@ for (onedata in data.to.fetch){
 <<sessioninfo, echo=FALSE, results=tex>>=
 toLatex(sessionInfo())
 @
+
+\clearpage
+\bibliography{curatedOvarianData_vignette}
 
 \end{document}

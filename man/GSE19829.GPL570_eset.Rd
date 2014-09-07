@@ -29,19 +29,21 @@ Experiment data
    platform_distribution:     
       commercial
    platform_accession:     
-      GPL570|GPL8300
+      GPL570
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1BG A1CF ... ZZZ3 (19093 total)
+  featureNames: A1BG A1BG-AS1 ... ZZZ3 (19816 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 19093 features, 28 samples
+assayData: 19816 features, 28 samples
 Platform type: hgu133plus2
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)

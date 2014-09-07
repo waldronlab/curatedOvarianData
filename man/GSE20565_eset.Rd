@@ -29,19 +29,21 @@ Experiment data
    platform_distribution:     
       commercial
    platform_accession:     
-      GPL570|GPL2005|GPL6801
+      GPL570
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1BG A1CF ... ZZZ3 (19093 total)
+  featureNames: A1BG A1BG-AS1 ... ZZZ3 (19816 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 19093 features, 140 samples
+assayData: 19816 features, 140 samples
 Platform type: hgu133plus2
 --------------------------- 
 Available sample meta-data: 
@@ -84,8 +86,8 @@ grade:
    6   27   63   44 
 
 batch: 
-2006-06-01 2006-06-27 2006-06-28 2006-06-29 2006-06-30 2006-07-20 2008-03-06 
-        21         18         37         20         36          7          1 
+   Length     Class      Mode 
+      140 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 

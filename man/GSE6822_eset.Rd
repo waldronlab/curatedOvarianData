@@ -30,18 +30,20 @@ Experiment data
       commercial
    platform_accession:     
       GPL80
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: rma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A2M AADAC ... ZYX (5231 total)
+  featureNames: A2M AADAC ... ZYX (5251 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 5231 features, 66 samples
+assayData: 5251 features, 66 samples
 Platform type: hu6800
 --------------------------- 
 Available sample meta-data: 
@@ -52,8 +54,8 @@ alt_sample_name:
        66 character character 
 
 sample_type: 
-tumor 
-   66 
+borderline   cellline      tumor 
+         6          2         58 
 
 histological_type: 
    Length     Class      Mode 
@@ -72,12 +74,8 @@ grade:
    1   14   40   11 
 
 batch: 
-2000-12-21 2001-05-03 2001-05-29 2001-06-12 2001-09-25 2001-09-26 2001-09-27 
-         1          1          3          3          1          5          8 
-2002-02-14 2002-04-17 2002-04-18 2002-07-18 2002-07-24 2002-10-20 2002-10-30 
-         4          1          9          7          4         10          5 
-2002-11-01 2002-11-13 
-         2          2 
+   Length     Class      Mode 
+       66 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 

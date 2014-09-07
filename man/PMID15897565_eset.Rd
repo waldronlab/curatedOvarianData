@@ -30,20 +30,22 @@ Experiment data
       commercial
    platform_accession:     
       GPL96
+   platform_technology:     
+      in situ oligonucleotide
    warnings:     
       These samples are a subset of PMID17290060.
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1CF A2M ... ZZZ3 (12981 total)
+  featureNames: A1CF A2M ... ZZZ3 (13104 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 12981 features, 63 samples
+assayData: 13104 features, 63 samples
 Platform type: hgu133a
 Binary overall survival summary (definitions of long and short provided by study authors): 
 
@@ -99,10 +101,8 @@ debulking:
         24         28         11 
 
 batch: 
-2002-09-20 2002-10-23 2002-11-12 2002-12-16 2002-12-21 2003-01-03 2003-05-30 
-        15          9         10          1          3         11         13 
-2003-07-02 
-         1 
+   Length     Class      Mode 
+       63 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 

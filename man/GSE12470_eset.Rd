@@ -30,18 +30,20 @@ Experiment data
       commercial
    platform_accession:     
       GPL887
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1BG A1CF ... ZZZ3 (16880 total)
+  featureNames: A1BG A1CF ... ZZZ3 (16889 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 16880 features, 53 samples
+assayData: 16889 features, 53 samples
 Platform type: hgug4110b
 --------------------------- 
 Available sample meta-data: 

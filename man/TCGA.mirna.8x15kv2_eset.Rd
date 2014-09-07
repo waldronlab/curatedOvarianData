@@ -30,12 +30,14 @@ Experiment data
       commercial
    platform_accession:     
       NA
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: ebv-miR-BART1-3p ebv-miR-BART1-5p ... kshv-miR-K12-9*
-    (799 total)
+  featureNames: ebv-miR-BART10 ebv-miR-BART10* ... kshv-miR-K12-9* (799
+    total)
   varLabels: probeset gene
   varMetadata: labelDescription
 

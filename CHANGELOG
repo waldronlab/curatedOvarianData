@@ -109,5 +109,49 @@ Affected subtype, debulking, primarysite, arrayedsite.
 1.0.1:
 * curate newly available grade for GSE17260 (Yoshihara 2010)
 
-1.0.3:
-* update CITATION to reflect published paper, update to Vignette.
+1.1.0:
+* add p-values for forest plots to the figure captions.
+* change curatedOvarianData to NormalizerV, FULLV for the alternative
+  packages in inst/extdata/*
+* For GSE18520 (Mok), change debulking from all "optimal" to all "NA".
+* Added GSE8842: all early-stage samples on a custom/commercial
+  Agilent two-color cDNA array.
+* Added citation to paper published in DATABASE, for citation("curatedOvarianData")
+
+1.1.1:
+* added options to createEsets.R: remove.retracted and remove.subsets
+
+1.2.0:
+* added RNA-seq data for TCGA, updated gene maps.
+
+1.2.1:
+* TCGA sample type "11" samples now correctly curated as "healthy"
+  instead of "adjacentnormal"
+
+1.2.2:
+* added section "Non-unique gene symbols" to the vignette.
+* updates to createEsetList.R to catch it up to the PMID24700801 version (www.bitbucket.org/lwaldron/ovrc4_sigvalidation) - mainly option to manually remove certain studies or patients
+* inst/extdata/patientselection.config by default now removes the same duplicate samples as PMID24700801.
+
+1.3.0:
+* added several new datasets (GSE26193, GSE49997, GSE44104, GSE51088)
+* added debulking status to Mok (GSE18520)
+* curated LMP and borderline tumors as "borderline" and benign tumors
+  as "benign" in sample_type.  Affected GSE2109, GSE30009, GSE49997,
+  GSE51088, GSE6822, GSE8842, GSE9891.
+* improved specificity of platform_accession, e.g. GSE20565_eset is
+  GPL570 only, not GPL570|GPL2005|GPL6801 (change made in
+  etc/ovarian_cancer_public_datasets.csv)
+* Renamed technology_type column to platform_technology in
+  etc/ovarian_cancer_public_datasets.csv, so this makes into
+  experimentData(eset).
+* Upgrade from Ensembl release 68 to release 76 for blast gene maps,
+  re-create Biomart gene maps on Aug 25 2014
+
+1.3.1:
+* added missing grade to GSE26913
+* createEsetList.R now does scaling and variance filtering of genes
+before removing any samples from the ExpressionSet.
+
+1.3.2:
+* Update all gene maps

@@ -29,19 +29,21 @@ Experiment data
    platform_distribution:     
       commercial
    platform_accession:     
-      GPL570|GPL8300
+      GPL8300
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: rma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: AADAC AAK1 ... ZZZ3 (8957 total)
+  featureNames: AADAC AAK1 ... ZZZ3 (8995 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 8957 features, 42 samples
+assayData: 8995 features, 42 samples
 Platform type: hgu95av2
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)

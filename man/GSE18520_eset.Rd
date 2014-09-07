@@ -25,23 +25,25 @@ Experiment data
    platform_summary:     
       hgu133plus2
    platform_manufacturer:     
-      Affymetrix|Operon
+      Affymetrix
    platform_distribution:     
-      commercial|non-commercial
+      commercial
    platform_accession:     
-      GPL570|GPL9216
+      GPL570
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1BG A1CF ... ZZZ3 (19093 total)
+  featureNames: A1BG A1BG-AS1 ... ZZZ3 (19816 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 19093 features, 63 samples
+assayData: 19816 features, 63 samples
 Platform type: hgu133plus2
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
@@ -95,8 +97,8 @@ deceased   living     NA's
       41       12       10 
 
 debulking: 
-optimal 
-     63 
+   optimal suboptimal       NA's 
+        28         11         24 
 
 percent_normal_cells: 
  0 
@@ -111,8 +113,8 @@ percent_tumor_cells:
  63 
 
 batch: 
-2004-03-12 2004-04-08 2004-04-09 2004-07-20 2004-08-12 2004-08-13 2004-09-30 
-        20          6          9         11         10          1          6 
+   Length     Class      Mode 
+       63 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 

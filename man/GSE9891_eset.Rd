@@ -30,18 +30,20 @@ Experiment data
       commercial
    platform_accession:     
       GPL570
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1BG A1CF ... ZZZ3 (19093 total)
+  featureNames: A1BG A1BG-AS1 ... ZZZ3 (19816 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 19093 features, 285 samples
+assayData: 19816 features, 285 samples
 Platform type: hgu133plus2
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
@@ -59,8 +61,8 @@ alt_sample_name:
       285 character character 
 
 sample_type: 
-tumor 
-  285 
+borderline      tumor 
+        18        267 
 
 histological_type: 
  endo other   ser 
@@ -131,22 +133,8 @@ debulking:
        160         88         37 
 
 batch: 
-2004-12-03 2004-12-23 2005-01-12 2005-01-17 2005-01-24 2005-01-31 2005-02-21 
-         3          4          7          7          8         10         10 
-2005-03-17 2005-05-05 2005-05-09 2005-05-25 2005-05-27 2005-05-30 2005-06-02 
-         2          1          1          2          3          3          6 
-2005-06-06 2005-06-08 2005-06-16 2005-06-17 2005-06-24 2005-07-06 2005-07-15 
-         4          5          3          5          6          2          9 
-2005-07-20 2005-07-29 2005-08-03 2005-08-05 2005-08-18 2005-08-24 2005-08-26 
-         7          5          6          3          4          8          4 
-2005-09-09 2005-09-14 2005-09-16 2005-09-21 2005-10-05 2005-10-26 2005-10-28 
-         4          6          6          4          5          2          4 
-2005-11-04 2005-11-09 2005-11-11 2005-11-23 2005-12-15 2005-12-21 2006-01-20 
-         6          3          7          4          7          8          3 
-2006-01-31 2006-02-08 2006-02-28 2006-04-05 2006-04-06 2006-04-12 2006-04-13 
-         7          3          3          7          3          7          4 
-2006-04-28 2006-05-03 2006-06-06 2006-06-07 2006-06-22 2006-07-07 2006-07-19 
-         6          9          6          3          9          4          7 
+   Length     Class      Mode 
+      285 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 

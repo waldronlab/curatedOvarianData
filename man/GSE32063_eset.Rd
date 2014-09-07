@@ -31,18 +31,20 @@ ion)
       commercial
    platform_accession:     
       GPL6480
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1CF A2LD1 ... ZZZ3 (19358 total)
+  featureNames: A1BG A1BG-AS1 ... ZZZ3 (20106 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 19358 features, 40 samples
+assayData: 20106 features, 40 samples
 Platform type: hgug4112a
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)

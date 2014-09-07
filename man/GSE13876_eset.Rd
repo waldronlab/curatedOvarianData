@@ -30,18 +30,20 @@ Experiment data
       non-commercial
    platform_accession:     
       GPL7759
+   platform_technology:     
+      spotted oligonucleotide
 
 Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1BG A1CF ... ZZZ3 (20505 total)
+  featureNames: A1BG A1CF ... ZZZ3 (20577 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 20505 features, 157 samples
+assayData: 20577 features, 157 samples
 Platform type: OperonHumanV3
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)

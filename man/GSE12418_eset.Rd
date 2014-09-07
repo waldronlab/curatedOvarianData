@@ -30,18 +30,20 @@ Experiment data
       non-commercial
    platform_accession:     
       GPL5886
+   platform_technology:     
+      spotted oligonucleotide
 
 Preprocessing: default
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1CF A2LD1 ... ZZZ3 (12656 total)
+  featureNames: A1CF A2M ... ZZZ3 (12681 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 12656 features, 54 samples
+assayData: 12681 features, 54 samples
 Platform type: PartheenMetaData
 Binary overall survival summary (definitions of long and short provided by study authors): 
 

@@ -30,18 +30,20 @@ Experiment data
       commercial
    platform_accession:     
       GPL96
+   platform_technology:     
+      in situ oligonucleotide
 
 Preprocessing: frma
 featureData(eset):
 An object of class 'AnnotatedDataFrame'
-  featureNames: A1CF A2M ... ZZZ3 (12981 total)
+  featureNames: A1CF A2M ... ZZZ3 (13104 total)
   varLabels: probeset gene
   varMetadata: labelDescription
 
 }}
 \details{
 \preformatted{
-assayData: 12981 features, 80 samples
+assayData: 13104 features, 80 samples
 Platform type: hgu133a
 Overall survival time-to-event summary (in years):
 Call: survfit(formula = Surv(time, cens) ~ -1)
@@ -102,12 +104,8 @@ deceased   living
       21       59 
 
 batch: 
-2004-09-29 2004-09-30 2004-10-01 2005-01-21 2005-01-25 2005-01-26 2005-01-28 
-         1          2          6          4          7          8         10 
-2005-03-02 2006-07-26 2006-07-27 2006-07-28 2006-08-11 2006-08-18 2006-08-19 
-         6          4          6          4         10          3          4 
-2006-08-21 
-         5 
+   Length     Class      Mode 
+       80 character character 
 
 uncurated_author_metadata: 
    Length     Class      Mode 
