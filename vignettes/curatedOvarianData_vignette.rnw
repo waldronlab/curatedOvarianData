@@ -27,6 +27,7 @@ Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron}
 
 <<preliminaries,echo=FALSE,results=hide>>=
 library(sva)
+library(logging)
 options(width=60)
 @ 
 
