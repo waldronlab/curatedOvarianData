@@ -1,8 +1,8 @@
 Package: curatedOvarianData
 Type: Package
 Title: Clinically Annotated Data for the Ovarian Cancer Transcriptome
-Version: 1.5.1
-Date: 2014-09-06
+Version: 1.5.2
+Date: 2015-02-06
 Author: Benjamin F. Ganzfried, Markus Riester, Steve Skates, Victoria Wang, Thomas Risch, Benjamin Haibe-Kains, Svitlana Tyekucheva, Jie Ding, Ina Jazic, Michael Birrer, Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron
 Maintainer: Levi Waldron <levi.waldron@hunter.cuny.edu>
 Description: The curatedOvarianData package provides data for gene expression analysis in patients with ovarian cancer.

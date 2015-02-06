@@ -1,4 +1,4 @@
-0.2.0: 
+0.2.0:
 * Added E-MTAB-386 (FFPE samples with survival data)
 * put MaxMean probe mappings in eset@featureData
 * put official Bioconductor platform names in eset@annotation
@@ -40,7 +40,7 @@
 * 0.4.1 actually did not include ages for GSE26712, but this version
 does.
 
-0.5.0: 
+0.5.0:
 * disallow the use of "unknown" in template, use NA instead.
 Affected subtype, debulking, primarysite, arrayedsite.
 * added unit test which does syntax checking against template.
@@ -63,9 +63,9 @@ Affected subtype, debulking, primarysite, arrayedsite.
   affects GSE12470_eset, GSE13876_eset, and GSE17260_eset.
   Streamlined blast_gene_maps.R so this update can be made simply by
   changing the ftp address of the genome map.
-* Updated BioMart probeset <--> gene maps (Oct 9, 2012).  Previous versions used 
+* Updated BioMart probeset <--> gene maps (Oct 9, 2012).  Previous versions used
   BioMart as of June 27, 2012.
-* Publication metadata was missing from GSE30009 - no longer require complete cases for 
+* Publication metadata was missing from GSE30009 - no longer require complete cases for
   MIAME in createEsets.R.
 * Made test_counts.R unit test work for Normalizer and FULL versions.
 * When technical replicate samples have a piece of non-agreeing sample
@@ -155,3 +155,6 @@ before removing any samples from the ExpressionSet.
 
 1.3.2:
 * Update all gene maps
+
+1.5.2:
+* Fix library(logging) bug and remove.samples bug in createEsets.R.
