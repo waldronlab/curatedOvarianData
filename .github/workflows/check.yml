@@ -38,6 +38,8 @@ jobs:
           BiocManager::install(c("rcmdcheck", "BiocCheck"), ask = FALSE, update = TRUE)
         shell: Rscript {0}
 
+      - uses: r-lib/actions/setup-tinytex@v2
+
       - name: Check Package
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
