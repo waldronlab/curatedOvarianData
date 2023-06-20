@@ -1,12 +1,11 @@
 test_counts <- function() {
     require(curatedOvarianData)
-    require(affy)
     strEsets <- data(package="curatedOvarianData")[[3]][,3]
     esets <- lapply(strEsets, function(x){
         data(list=x)
         get(x)
     })
-    df <- data.frame(PMID=sapply(esets, pubMedIds), 
+    df <- data.frame(PMID=sapply(esets, pubMedIds),
                      ncol=sapply(esets,ncol),
                      nrow=sapply(esets,nrow),
                      nwithbatch=sapply(esets, function(x) sum(!is.na(x$batch))),

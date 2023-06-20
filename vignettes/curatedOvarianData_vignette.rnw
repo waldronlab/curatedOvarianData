@@ -9,7 +9,7 @@
 
 <<<style-Sweave, eval=TRUE, echo=FALSE, results=tex>>=
 BiocStyle::latex()
-@ 
+@
 
 
 \bioctitle[curatedOvarianData]{curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome}
@@ -20,6 +20,7 @@ Victoria Xin Wang, Mahnaz Ahmadifar, Michael Birrer, \\
 Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \date{2014}
 
 \maketitle
@@ -29,7 +30,7 @@ Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron}
 library(sva)
 library(logging)
 options(width=60)
-@ 
+@
 
 
 \section{curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer
@@ -42,7 +43,7 @@ metadata.  It allows a computational user to efficiently identify studies and
 patient subgroups of interest for analysis and to run such analyses
 immediately without the challenges posed by harmonizing heterogeneous
 microarray technologies, study designs, expression data processing methods,
-and clinical data formats.  
+and clinical data formats.
 
 The \Biocpkg{curatedOvarianData} package is published in the journal
 DATABASE \cite{ganzfried2013}. Note the existence also of
@@ -71,7 +72,7 @@ TCGA_eset
 @
 The datasets are provided as \Bioconductor{} \Rclass{ExpressionSet} objects and
 we refer to the Bioconductor documentation for users unfamiliar with this data
-structure. 
+structure.
 
 \section{Load datasets based on rules}
 For a meta-analysis, we typically want to filter datasets and patients to
@@ -80,9 +81,9 @@ powerful R script that does the filtering and provides the data as a list of
 \Rclass{ExpressionSet} objects. One can use this script within R by first sourcing a config
 file which specifies the filters, like the minimum numbers of patients in each
 dataset. It is also possible to filter samples by annotation, for example to remove
-early stage and normal samples. 
+early stage and normal samples.
 <<example2loadstep1>>=
-source(system.file("extdata", 
+source(system.file("extdata",
 "patientselection.config",package="curatedOvarianData"))
 ls()
 @
@@ -102,7 +103,7 @@ removed.
 \subsection{Cleaning of duplicate samples}
 The patientselection.config file loaded above contains several objects
 indicating which samples were removed for QC and duplicate cleaning by
-Waldron \emph{et al.} \cite{waldron2014}: 
+Waldron \emph{et al.} \cite{waldron2014}:
 
 \begin{itemize}
   \item tcga.lowcor.outliers: two profiles identified in the TCGA dataset with anomolously low correlation to other ovc profiles
@@ -116,7 +117,7 @@ Waldron \emph{et al.} \cite{waldron2014}:
 <<showls>>=
 #remove.samples and duplicates are too voluminous:
 sapply(ls(), function(x) if(!x %in% c("remove.samples", "duplicates")) print(get(x)))
-@ 
+@
 
 Now that we have defined the sample filter, we create a list of
 \Rclass{ExpressionSet} objects by sourcing the \file{createEsetList.R} file:
@@ -127,7 +128,7 @@ source(system.file("extdata", "createEsetList.R", package =
 It is also possible to run the script from the command line and then load the
 R data file within R:
 \begin{verbatim}
-R --vanilla "--args patientselection.config ovarian.eset.rda tmp.log"  < createEsetList.R 
+R --vanilla "--args patientselection.config ovarian.eset.rda tmp.log"  < createEsetList.R
 \end{verbatim}
 Now we have \Sexpr{length(esets)} datasets with samples that passed our filter in a list of
 \Rclass{ExpressionSet} objects called \texttt{esets}:
@@ -138,7 +139,7 @@ names(esets)
 Next we use the list of \Sexpr{length(esets)} datasets from the previous
 example and test if the expression of the CXCL12 gene is associated with
 overall survival.  CXCL12/CXCR4 is a chemokine/chemokine receptor axis that
-has previously been shown to be directly involved in cancer pathogenesis.  
+has previously been shown to be directly involved in cancer pathogenesis.
 
 We first define a function that will generate a forest plot for a given gene. It
 needs the overall survival information as \Rclass{Surv} objects, which the
@@ -159,9 +160,9 @@ mlab="Overall", rma.method="FE", at=NULL,xlab="Hazard Ratio",...) {
         tmp$probeset <- exprs(esets[[i]])[probeset,]
 
         summary(coxph(formula,data=tmp))$coefficients[1,c(1,3)]
-    })  
+    })
 
-    res.rma <- metafor::rma(yi = coefs[1,], sei = coefs[2,], 
+    res.rma <- metafor::rma(yi = coefs[1,], sei = coefs[2,],
         method=rma.method)
 
     if (is.null(at)) at <- log(c(0.25,1,4,20))
@@ -169,7 +170,7 @@ mlab="Overall", rma.method="FE", at=NULL,xlab="Hazard Ratio",...) {
     atransf=exp, at=at, mlab=mlab,...)
     return(res.rma)
 }
-@ 
+@
 
 \begin{figure}
 \centering
@@ -194,12 +195,12 @@ tumor smaller than 1 cm, and Federation of Gynecology and Obstetrics (FIGO)
 stage. We first filter the datasets without debulking and stage information:
 
 <<filterdatasets>>=
-idx.tumorstage <- sapply(esets, function(X) 
+idx.tumorstage <- sapply(esets, function(X)
     sum(!is.na(X$tumorstage)) > 0 & length(unique(X$tumorstage)) > 1)
 
-idx.debulking <- sapply(esets, function(X) 
-    sum(X$debulking=="suboptimal",na.rm=TRUE)) > 0 
-@ 
+idx.debulking <- sapply(esets, function(X)
+    sum(X$debulking=="suboptimal",na.rm=TRUE)) > 0
+@
 
 In Figure~\ref{fig:example4:forest}, we see that CXCL12 stays significant after
 adjusting for debulking status and FIGO stage. We repeated this analysis for
@@ -210,7 +211,7 @@ the CXCR4 receptor and found no significant association with overall survival
 \centering
 <<example4plot,fig=TRUE>>=
 res <- forestplot(esets=esets[idx.debulking & idx.tumorstage],
-    probeset="CXCL12",formula=y~probeset+debulking+tumorstage, 
+    probeset="CXCL12",formula=y~probeset+debulking+tumorstage,
     at=log(c(0.5,1,2,4)))
 @
 \caption{Validation of CXCL12 as an independent predictor of survival. This
@@ -251,8 +252,8 @@ combine2 <- function(X1, X2) {
     fids <- intersect(featureNames(X1), featureNames(X2))
     X1 <- X1[fids,]
     X2 <- X2[fids,]
-    ExpressionSet(cbind(exprs(X1),exprs(X2)), 
-        AnnotatedDataFrame(rbind(as(phenoData(X1),"data.frame"), 
+    ExpressionSet(cbind(exprs(X1),exprs(X2)),
+        AnnotatedDataFrame(rbind(as(phenoData(X1),"data.frame"),
                                  as(phenoData(X2),"data.frame")))
     )
 }
@@ -290,11 +291,11 @@ boxplot(combat_edata)
 In the standard version of curatedOvarianData (the version available on
 Bioconductor), we collapse manufacturer probesets to official HGNC symbols
 using the Biomart database. Some probesets are mapped to multiple HGNC symbols
-in this database. For these probesets, we provide all the symbols. For example 
+in this database. For these probesets, we provide all the symbols. For example
 \texttt{220159\_at} maps to \textit{ABCA11P} and \textit{ZNF721} and we
 provide \texttt{ABCA11P///ZNF721} as probeset name. If you have an array of
 gene symbols for which you want to access the expression data, "ABCA11P" would
-not be found in curatedOvarianData in this example. 
+not be found in curatedOvarianData in this example.
 
 The script createEsetList.R provides three methods to deal with
 non-specific probe sets by setting the variable $probes.not.mapped.uniquely$ to:
@@ -312,7 +313,7 @@ in which both \textit{ZNF721} and \textit{ABCA11P} are features with
 identical expression data:
 
 <<expand>>=
-expandProbesets <- function (eset, sep = "///") 
+expandProbesets <- function (eset, sep = "///")
 {
     x <- lapply(featureNames(eset), function(x) strsplit(x, sep)[[1]])
     eset <- eset[order(sapply(x, length)), ]
@@ -339,7 +340,7 @@ of a given platform.  You can see which representative probeset was chosen by lo
 
 <<featureData>>=
 head(pData(featureData(GSE18520_eset)))
-@ 
+@
 
 The full, unmerged ExpressionSets are available through the
 FULLVcuratedOvarianData package at
@@ -351,7 +352,7 @@ slots, e.g.:
 
 <<annotationeg>>=
 annotation(GSE18520_eset)
-@ 
+@
 
 so that standard filtering methods such as \Rfunction{nsFilter} will
 work by default.
@@ -359,7 +360,7 @@ work by default.
 \section{Available Clinical Characteristics}
 <<loadallsamples, echo=FALSE,results=hide>>=
 rm(list=ls())
-source(system.file("extdata", 
+source(system.file("extdata",
     "patientselection_all.config",package="curatedOvarianData"))
 source(system.file("extdata", "createEsetList.R", package =
     "curatedOvarianData"))
@@ -369,9 +370,9 @@ source(system.file("extdata", "createEsetList.R", package =
 \centering
 <<heatmap, echo=FALSE, fig=TRUE>>=
 .esetsStats <- function(esets) {
-    res <- lapply(varLabels(esets[[1]]), function(covar) unlist(sapply(esets, 
+    res <- lapply(varLabels(esets[[1]]), function(covar) unlist(sapply(esets,
         function(X) sum(!is.na(X[[covar]]))>0)))
-    names(res) <- varLabels(esets[[1]])    
+    names(res) <- varLabels(esets[[1]])
     do.call(rbind, res)
 }
 
@@ -398,7 +399,7 @@ First, define some useful functions for this purpose:
 <<esetToTableFuns>>=
 source(system.file("extdata", "summarizeEsets.R", package =
     "curatedOvarianData"))
-@ 
+@
 
 Now create the table, used for Table 1 of the curatedOvarianData manuscript:
 
@@ -413,15 +414,15 @@ tempfile() with something like myfile <- ``nicetable.csv'' )
 <<writeesettable>>=
 (myfile <- tempfile())
 write.table(summary.table, file=myfile, row.names=FALSE, quote=TRUE, sep=",")
-@ 
+@
 
 <<xtable, echo=FALSE, results=tex>>=
 library(xtable)
-print(xtable(summary.table[, c(2, 3, 4, 5, 7)], 
-             caption="Datasets provided by curatedOvarianData.  This is an abbreviated version of Table 1 of the manuscript; the full version is written by the write.table command above.  Stage column is early/late/unknown, histology column is ser/clearcell/endo/mucinous/other/unknown.", 
+print(xtable(summary.table[, c(2, 3, 4, 5, 7)],
+             caption="Datasets provided by curatedOvarianData.  This is an abbreviated version of Table 1 of the manuscript; the full version is written by the write.table command above.  Stage column is early/late/unknown, histology column is ser/clearcell/endo/mucinous/other/unknown.",
              table.placement="p", caption.placement="bottom"),
       floating.environment='sidewaystable')
-@ 
+@
 
 \section{For non-R users}
 
@@ -431,11 +432,10 @@ a simple way to do it.  For one dataset:
 
 <<simplygetdata, eval=FALSE>>=
 library(curatedOvarianData)
-library(affy)
 data(GSE30161_eset)
 write.csv(exprs(GSE30161_eset), file="GSE30161_eset_exprs.csv")
 write.csv(pData(GSE30161_eset), file="GSE30161_eset_clindata.csv")
-@ 
+@
 
 Or for several datasets:
 
@@ -447,7 +447,7 @@ for (onedata in data.to.fetch){
     write.csv(exprs(get(onedata)), file=paste(onedata, "_exprs.csv", sep=""))
     write.csv(pData(get(onedata)), file=paste(onedata, "_clindata.csv", sep=""))
 }
-@ 
+@
 
 \section{Session Info}
 <<sessioninfo, echo=FALSE, results=tex>>=
