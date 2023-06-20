@@ -35,15 +35,10 @@ jobs:
         run: |
           options(repos = c(CRAN = "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest"))
           remotes::install_deps(dependencies = TRUE, repos = BiocManager::repositories())
-          BiocManager::install(c("rcmdcheck", "BiocCheck"), ask = FALSE, update = TRUE)
+          BiocManager::install(c("rcmdcheck", "BiocCheck", "tinytex"), ask = FALSE, update = TRUE)
+          tinytex::install_tinytex()
         shell: Rscript {0}
         
-      - name: Update system packages
-        run: sudo apt-get update
-        
-      - uses: r-lib/actions/setup-tinytex@v2
-      - run: tlmgr --version
-
       - name: Check Package
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
