@@ -37,8 +37,12 @@ jobs:
           remotes::install_deps(dependencies = TRUE, repos = BiocManager::repositories())
           BiocManager::install(c("rcmdcheck", "BiocCheck"), ask = FALSE, update = TRUE)
         shell: Rscript {0}
-
+        
+      - name: Update system packages
+        run: sudo apt-get update
+        
       - uses: r-lib/actions/setup-tinytex@v2
+      - run: tlmgr --version
 
       - name: Check Package
         env:
