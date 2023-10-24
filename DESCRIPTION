@@ -1,7 +1,7 @@
 Package: curatedOvarianData
 Type: Package
 Title: Clinically Annotated Data for the Ovarian Cancer Transcriptome
-Version: 1.40.0
+Version: 1.41.0
 Date: 2023-06-15
 Author: Benjamin F. Ganzfried, Markus Riester, Steve Skates, Victoria Wang, Thomas Risch, Benjamin Haibe-Kains, Svitlana Tyekucheva, Jie Ding, Ina Jazic, Michael Birrer, Giovanni Parmigiani, Curtis Huttenhower, Levi Waldron
 Maintainer: Levi Waldron <lwaldron.research@gmail.com>
