@@ -1,8 +1,5 @@
 test_checkCurated <- function(){
-<<<<<<< HEAD
-=======
     library(curatedOvarianData)
->>>>>>> c16d804 (get rid of affy deps)
     ##the template to use
     ##template.file <- "../extdata/template_ov.csv"
     template.file <- system.file("extdata/template_ov.csv", package = "curatedOvarianData")
