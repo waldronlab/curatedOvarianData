@@ -1,6 +1,12 @@
 ^README\.md$
 ^external_data_store\.txt$
 ^\.gitattributes$
+<<<<<<< HEAD
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.github$
+=======
+.github
+curatedOvarianData.Rproj
+
+>>>>>>> c16d804 (get rid of affy deps)
