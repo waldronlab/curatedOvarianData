@@ -1,5 +1,5 @@
 test_checkCurated <- function(){
-    library(affy)
+    library(curatedOvarianData)
     ##the template to use
     ##template.file <- "../extdata/template_ov.csv"
     template.file <- system.file("extdata/template_ov.csv", package = "curatedOvarianData")

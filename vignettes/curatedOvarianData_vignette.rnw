@@ -431,7 +431,6 @@ a simple way to do it.  For one dataset:
 
 <<simplygetdata, eval=FALSE>>=
 library(curatedOvarianData)
-library(affy)
 data(GSE30161_eset)
 write.csv(exprs(GSE30161_eset), file="GSE30161_eset_exprs.csv")
 write.csv(pData(GSE30161_eset), file="GSE30161_eset_clindata.csv")

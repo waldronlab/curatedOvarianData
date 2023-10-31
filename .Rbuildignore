@@ -1,3 +1,6 @@
 ^README\.md$
 ^external_data_store\.txt$
 ^\.gitattributes$
+.github
+curatedOvarianData.Rproj
+
