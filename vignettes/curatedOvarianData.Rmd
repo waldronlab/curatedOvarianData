@@ -1,0 +1,456 @@
+---
+title: >
+  curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer
+  Transcriptome
+author: >
+  Benjamin Frederick Ganzfried, Markus Riester, Benjamin Haibe-Kains,
+  Thomas Risch, Svitlana Tyekucheva, Ina Jazic, Victoria Xin Wang,
+  Mahnaz Ahmadifar, Michael Birrer, Giovanni Parmigiani,
+  Curtis Huttenhower, Levi Waldron
+date: "`r BiocStyle::doc_date()`"
+vignette: |
+  %\VignetteIndexEntry{curatedOvarianData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    toc_float: true
+package: curatedOvarianData
+bibliography: ../inst/REFERENCES.bib
+---
+
+
+# Introduction
+
+This package represents a manually curated data collection for gene expression
+meta-analysis of patients with ovarian cancer. This resource provides
+uniformly prepared microarray data with curated and documented clinical
+metadata. It allows a computational user to efficiently identify studies and
+patient subgroups of interest for analysis and to run such analyses
+immediately without the challenges posed by harmonizing heterogeneous
+microarray technologies, study designs, expression data processing methods,
+and clinical data formats.
+
+The `curatedOvarianData` package is published in the journal
+DATABASE (@ganzfried2013). Note the existence also of
+`curatedCRCData` and `curatedBladderData`.
+
+Please see http://bcb.dfci.harvard.edu/ovariancancer for alterative
+versions of this package, differing in how redundant probe sets are
+dealt with.
+
+In this vignette, we give a short tour of the package and will show how to use
+it efficiently.
+
+## Load TCGA data
+
+Loading a single dataset is very easy. First we load the package:
+
+```{r example1tcgastep1,include=TRUE,results="hide",message=FALSE,warning=FALSE}
+library(curatedOvarianData)
+library(sva)
+library(logging)
+```
+
+To get a listing of all the datasets, use the `data` function:
+
+```{r example1tcgastep2_list, eval=FALSE}
+data(package="curatedOvarianData")
+```
+
+Now to load the TCGA data, we use the `data` function again:
+
+```{r example1tcgastep2}
+data(TCGA_eset)
+TCGA_eset
+```
+
+The datasets are provided as Bioconductor `ExpressionSet` objects and
+we refer to the Bioconductor documentation for users unfamiliar with this data
+structure.
+
+## Load datasets based on rules
+
+For a meta-analysis, we typically want to filter datasets and patients to
+get a population of patients we are interested in. We provide a short but
+powerful R script that does the filtering and provides the data as a list of
+`ExpressionSet` objects. One can use this script within R by first sourcing a
+configuration file which specifies the filters, like the minimum numbers of
+patients in each dataset. It is also possible to filter samples by annotation,
+for example to remove early stage and normal samples.
+
+```{r example2loadstep1}
+source(system.file("extdata",
+"patientselection.config",package="curatedOvarianData"))
+ls()
+```
+
+See what the values of these variables we have loaded are. The
+variable names are fairly descriptive, but note that "rule.1" is a
+character vector of length 2, where the first entry is the name of a
+clinical data variable, and the second entry is a Regular Expression
+providing a requirement for that variable. Any number of rules can be
+added, with increasing identifiers, e.g. "rule.2", "rule.3", etc.
+
+Here strict.checking is FALSE, meaning that samples not annotated for
+the variables in these rules are allowed to pass the filter. If
+`strict.checking == TRUE`, samples missing this annotation will be
+removed.
+
+### Cleaning of duplicate samples
+
+The patientselection.config file loaded above contains several objects
+indicating which samples were removed for QC and duplicate cleaning by
+@waldron2014 :
+
+* tcga.lowcor.outliers: two profiles identified in the TCGA dataset with
+  anomolously low correlation to other ovc profiles
+* duplicates: samples blacklisted because they contain duplicates. In the case
+  of duplicates, generally better-annotated samples, and samples from more
+  recent studies, were kept.
+* remove.samples: the above to vectors of samples concatenated
+
+```{r showls}
+#remove.samples and duplicates are too voluminous:
+sapply(
+    ls(),
+    function(x) if(!x %in% c("remove.samples", "duplicates")) print(get(x))
+)
+```
+
+Now that we have defined the sample filter, we create a list of
+`ExpressionSet` objects by sourcing the `createEsetList.R` file:
+
+```{r example2loadstep2}
+source(system.file("extdata", "createEsetList.R", package =
+"curatedOvarianData"))
+```
+
+It is also possible to run the script from the command line and then load the
+R data file within R:
+
+```
+R --vanilla "--args patientselection.config ovarian.eset.rda tmp.log"  < createEsetList.R
+```
+
+Now we have datasets with samples that passed our filter in a list of
+`ExpressionSet` objects called `esets`:
+
+```{r example2loadstep3}
+names(esets)
+```
+
+## Association of CXCL12 expression with overall survival
+
+Next we use the list of datasets from the previous
+example and test if the expression of the CXCL12 gene is associated with
+overall survival. CXCL12/CXCR4 is a chemokine/chemokine receptor axis that
+has previously been shown to be directly involved in cancer pathogenesis.
+
+We first define a function that will generate a forest plot for a given gene. It
+needs the overall survival information as `Surv` objects, which the
+`createEsetList.R` function already added in the `phenoData`
+slots of the `ExpressionSet` objects, accessible at the `y` label. The
+resulting forest plot is shown for the CXCL12 gene in
+the figure below.
+
+```{r example3prepare}
+esets[[1]]$y
+forestplot <- function(esets, y="y", probeset, formula=y~probeset,
+mlab="Overall", rma.method="FE", at=NULL,xlab="Hazard Ratio",...) {
+    require(metafor)
+    esets <- esets[sapply(esets, function(x) probeset %in% featureNames(x))]
+    coefs <- sapply(1:length(esets), function(i) {
+        tmp   <- as(phenoData(esets[[i]]), "data.frame")
+        tmp$y <- esets[[i]][[y]]
+        tmp$probeset <- exprs(esets[[i]])[probeset,]
+
+        summary(coxph(formula,data=tmp))$coefficients[1,c(1,3)]
+    })
+
+    res.rma <- metafor::rma(yi = coefs[1,], sei = coefs[2,],
+        method=rma.method)
+
+    if (is.null(at)) at <- log(c(0.25,1,4,20))
+    forest.rma(res.rma, xlab=xlab, slab=gsub("_eset$","",names(esets)),
+    atransf=exp, at=at, mlab=mlab,...)
+    return(res.rma)
+}
+```
+
+```{r example3plot, fig.width=8, fig.height=6}
+res <- forestplot(esets=esets,probeset="CXCL12",at=log(c(0.5,1,2,4)))
+```
+
+**Figure 1**: The database confirms CXCL12 as prognostic of overall survival in
+patients with ovarian cancer. Forest plot of the expression of the chemokine
+CXCL12 as a univariate predictor of overall survival, using all datasets with
+applicable expression and survival information. A hazard ratio significantly
+larger than 1 indicates that patients with high CXCL12 levels had poor outcome.
+The p-value for the overall HR, found in res$pval, is `r signif(res$pval, 2)`.
+This plot is Figure 3 of the curatedOvarianData manuscript.
+
+We now test whether CXCL12 is an independent predictor of survival in a
+multivariate model together with success of debulking surgery, defined as
+residual tumor smaller than 1 cm, and Federation of Gynecology and Obstetrics
+(FIGO) stage. We first filter the datasets without debulking and stage
+information:
+
+```{r filterdatasets}
+idx.tumorstage <- sapply(esets, function(X)
+    sum(!is.na(X$tumorstage)) > 0 & length(unique(X$tumorstage)) > 1)
+
+idx.debulking <- sapply(esets, function(X)
+    sum(X$debulking=="suboptimal",na.rm=TRUE)) > 0
+```
+
+In the figure below, we see that CXCL12 stays significant after
+adjusting for debulking status and FIGO stage. We repeated this analysis for
+the CXCR4 receptor and found no significant association with overall survival
+(Figure 3).
+
+```{r example4plot, fig.width=8, fig.height=6}
+res <- forestplot(esets=esets[idx.debulking & idx.tumorstage],
+    probeset="CXCL12",formula=y~probeset+debulking+tumorstage,
+    at=log(c(0.5,1,2,4)))
+```
+
+**Figure 2**: Validation of CXCL12 as an independent predictor of survival.
+This figure shows a forest plot as in Figure 1, but the CXCL12 expression
+levels were adjusted for debulking status (optimal versus suboptimal) and tumor
+stage. The p-value for the overall HR, found in res$pval, is `r
+signif(res$pval, 2)`.
+
+```{r example5plot, fig.width=8, fig.height=6}
+res <- forestplot(esets=esets,probeset="CXCR4",at=log(c(0.5,1,2,4)))
+```
+
+**Figure 3**: Up-regulation of CXCR4 is not associated with overall survival.
+This figure shows again a forest plot as in Figure 1, but here the association
+of mRNA expression levels of the CXCR4 receptor and overall survival is shown.
+The p-value for the overall HR, found in res$pval, is `r signif(res$pval, 2)`.
+
+## Batch correction with ComBat
+
+If datasets are merged, it is typically recommended to remove a very likely
+batch effect. We will use the ComBat [@johnson2007] method, implemented
+for example in the SVA Bioconductor package [@sva]. To combine two
+`ExpressionSet` objects, we can use the `combine()` function. This function
+will fail when the two ExpressionSets have conflicting annotation slots, for
+example `annotation` when the platforms differ. We write a simple `combine2`
+function which only considers the `exprs` and `phenoData` slots:
+
+```{r combine2}
+combine2 <- function(X1, X2) {
+    fids <- intersect(featureNames(X1), featureNames(X2))
+    X1 <- X1[fids,]
+    X2 <- X2[fids,]
+    ExpressionSet(cbind(exprs(X1),exprs(X2)),
+        AnnotatedDataFrame(rbind(as(phenoData(X1),"data.frame"),
+                                 as(phenoData(X2),"data.frame")))
+    )
+}
+```
+
+In Figure 4, we combined two datasets from different platforms, resulting in a
+huge batch effect.
+
+```{r boxplot1, fig.width=8, fig.height=6}
+data(E.MTAB.386_eset)
+data(GSE30161_eset)
+X <- combine2(E.MTAB.386_eset, GSE30161_eset)
+boxplot(exprs(X))
+```
+
+**Figure 4**: Boxplot showing the expression range for all samples of two
+merged datasets arrayed on different platforms. This illustrates a huge batch
+effect.
+
+Now we apply ComBat and adjust for the batch and show the boxplot after batch
+correction in Figure 5:
+
+```{r combat}
+mod <- model.matrix(~as.factor(tumorstage), data=X)
+batch <- as.factor(grepl("DFCI",sampleNames(X)))
+combat_edata <- ComBat(dat=exprs(X), batch=batch, mod=mod)
+```
+
+```{r boxplot2, fig.width=8, fig.height=6}
+boxplot(combat_edata)
+```
+
+**Figure 5**: Boxplot showing the expression range for all samples of two
+merged datasets arrayed on different platforms after batch correction with
+ComBat.
+
+## Non-specific probe sets
+
+In the standard version of curatedOvarianData (the version available on
+Bioconductor), we collapse manufacturer probesets to official HGNC symbols
+using the Biomart database. Some probesets are mapped to multiple HGNC symbols
+in this database. For these probesets, we provide all the symbols. For example
+`220159_at` maps to *ABCA11P* and *ZNF721* and we
+provide `ABCA11P///ZNF721` as probeset name. If you have an array of
+gene symbols for which you want to access the expression data, "ABCA11P" would
+not be found in curatedOvarianData in this example.
+
+The script createEsetList.R provides three methods to deal with
+non-specific probe sets by setting the variable $probes.not.mapped.uniquely$ to:
+
+* "keep": leave as-is, these have "///" in gene names,
+* "drop": drop any non-uniquely mapped features, or
+* "split": split non-uniquely mapped features to one per row. If this creates
+  duplicate rows for a gene, those rows are averaged.
+
+This feature uses the following function to create a new ExpressionSet,
+in which both *ZNF721* and *ABCA11P* are features with
+identical expression data:
+
+```{r expand}
+expandProbesets <- function (eset, sep = "///")
+{
+    x <- lapply(featureNames(eset), function(x) strsplit(x, sep)[[1]])
+    eset <- eset[order(sapply(x, length)), ]
+    x <- lapply(featureNames(eset), function(x) strsplit(x, sep)[[1]])
+    idx <- unlist(sapply(1:length(x), function(i) rep(i, length(x[[i]]))))
+    xx <- !duplicated(unlist(x))
+    idx <- idx[xx]
+    x <- unlist(x)[xx]
+    eset <- eset[idx, ]
+    featureNames(eset) <- x
+    eset
+}
+
+X <- TCGA_eset[head(grep("///", featureNames(TCGA_eset))),]
+exprs(X)[,1:3]
+exprs(expandProbesets(X))[,1:3]
+```
+
+## FULLVcuratedOvarianData
+
+In curatedOvarianData, probesets mapping to the same gene symbol are
+merge by selecting the probeset with maximum mean across all studies
+of a given platform. You can see which representative probeset was chosen by
+looking at the featureData of the Expressionset, e.g.:
+
+```{r featureData}
+head(pData(featureData(GSE18520_eset)))
+```
+
+The full, unmerged ExpressionSets are available through the
+FULLVcuratedOvarianData package at
+http://bcb.dfci.harvard.edu/ovariancancer/. Probeset to gene maps are
+again provided in the featureData of those `ExpressionSet`s.
+Where official Bioconductor annotation packages are available for the
+array, these are stored in the `ExpressionSet` annotation
+slots, e.g.:
+
+```{r annotationeg}
+annotation(GSE18520_eset)
+```
+
+so that standard filtering methods such as `nsFilter` will
+work by default.
+
+## Available Clinical Characteristics
+
+```{r loadallsamples, echo=FALSE, results='hide'}
+rm(list=ls())
+source(system.file("extdata",
+    "patientselection_all.config",package="curatedOvarianData"))
+source(system.file("extdata", "createEsetList.R", package =
+    "curatedOvarianData"))
+```
+
+```{r heatmap, echo=FALSE, fig.width=10, fig.height=8}
+.esetsStats <- function(esets) {
+    res <- lapply(varLabels(esets[[1]]), function(covar) unlist(sapply(esets,
+        function(X) sum(!is.na(X[[covar]]))>0)))
+    names(res) <- varLabels(esets[[1]])
+    do.call(rbind, res)
+}
+
+df.r <- .esetsStats(esets)
+M <- as.matrix(apply(df.r,c(1,2),ifelse,0,1))
+colnames(M) <- gsub("_eset$", "", colnames(M))
+# no need to show the sample ids
+M <- M[-(1:2),]
+heatmap(M[nrow(M):1,],scale="none",margins=c(8,10),Rowv=NA)
+```
+
+**Figure 6**: Available clinical annotation. This heatmap visualizes for each
+curated clinical characteristic (rows) the availability in each dataset
+(columns). Red indicates that the corresponding characteristic is available for
+at least one sample in the dataset. This plot is Figure 2 of the
+curatedOvarianData manuscript.
+
+## Summarizing the List of ExpressionSets
+
+This example provides a table summarizing the datasets being used, and
+is useful when publishing analyses based on curatedOvarianData.
+First, define some useful functions for this purpose:
+
+```{r esetToTableFuns}
+source(system.file("extdata", "summarizeEsets.R", package =
+    "curatedOvarianData"))
+```
+
+Now create the table, used for Table 1 of the curatedOvarianData manuscript:
+
+```{r esettable, echo=FALSE}
+summary.table <- t(sapply(esets, getEsetData))
+rownames(summary.table) <- sub("_eset", "", rownames(summary.table))
+```
+
+Optionally write this table to file, for example (replace myfile <- tempfile()
+with something like myfile <- "nicetable.csv")
+
+```{r writeesettable}
+(myfile <- tempfile())
+write.table(summary.table, file=myfile, row.names=FALSE, quote=TRUE, sep=",")
+```
+
+```{r display_table, echo=FALSE}
+# Display a subset of the table for the R markdown document
+knitr::kable(
+    summary.table[, c(2, 3, 4, 5, 7)],
+    caption="Datasets provided by curatedOvarianData. This is an abbreviated
+    version of Table 1 of the manuscript; the full version is written by the
+    write.table command above. Stage column is early/late/unknown, histology
+    column is ser/clearcell/endo/mucinous/other/unknown."
+)
+```
+
+## For non-R users
+
+If you are not doing your analysis in R, and just want to get some
+data you have identified from the curatedOvarianData manual, here is
+a simple way to do it. For one dataset:
+
+```{r simplygetdata, eval=FALSE}
+library(curatedOvarianData)
+data(GSE30161_eset)
+write.csv(exprs(GSE30161_eset), file="GSE30161_eset_exprs.csv")
+write.csv(pData(GSE30161_eset), file="GSE30161_eset_clindata.csv")
+```
+
+Or for several datasets:
+
+```{r simplyseveraldatasets, eval=FALSE}
+data.to.fetch <- c("GSE30161_eset", "E.MTAB.386_eset")
+for (onedata in data.to.fetch){
+    print(paste("Fetching", onedata))
+    data(list=onedata)
+    write.csv(exprs(get(onedata)), file=paste(onedata, "_exprs.csv", sep=""))
+    write.csv(pData(get(onedata)), file=paste(onedata, "_clindata.csv", sep=""))
+}
+```
+
+## Session Info
+
+```{r sessioninfo}
+sessionInfo()
+```
+
+## References
+
