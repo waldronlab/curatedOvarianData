@@ -15,15 +15,20 @@ Depends:
 Imports:
     BiocGenerics
 Suggests:
+    BiocStyle,
     futile.logger,
     genefilter,
+    knitr,
     logging,
     metafor,
+    rmarkdown,
     RUnit,
     survival,
     sva,
     xtable
 License: Artistic-2.0
+VignetteBuilder:
+    knitr
 URL: http://bcb.dfci.harvard.edu/ovariancancer
 biocViews: ExperimentData, RNASeqData, CancerData, OvarianCancerData,
     MicroarrayData
