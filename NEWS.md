@@ -1,3 +1,9 @@
+### Changes in version 1.49.1
+* Modernized package for current Bioconductor standards.
+* Updated DESCRIPTION with Authors@R, standard version and correct biocViews.
+* Converted legacy CITATION to bibentry() format.
+* Consolidated NEWS into NEWS.md.
+
 ### Changes in version 1.5.2
 * Fixed bugs in `createEsets.R`
 
@@ -120,3 +126,22 @@
 * Added E-MTAB-386 (FFPE samples with survival data)
 * Put MaxMean probe mappings in `eset@featureData`
 * Put official Bioconductor platform names in `eset@annotation`
+
+### Initial Release
+curatedOvarianData is a comprehensive resource for clinically-oriented
+investigation of the ovarian cancer transcriptome.  It provides
+clinically-annotated expression data for 2,970 patients as 24
+expression datasets including The Cancer Genome Atlas (TCGA) microRNA
+and Affymetrix mRNA microarray datasets.  Probesets are mapped to
+official gene symbols using up-to-date maps.  All clinical annotations
+are hand-curated and machine-checked to ensure consistent syntax and
+maximum retention of available clinical variables, resulting in nearly
+1,500 patients in which overall survival, stage, grade and histology
+are available.  ExpressionSet slots are populated with numerous
+metadata including PubMed IDs, citations, abstracts, study-specific
+warnings for retractions and duplicated samples, and probeset <-->
+gene maps.  The package vignette provides examples for selecting
+patients and datasets based on flexible rules, performing
+meta-analysis of potential biomarkers, creating publication-ready
+tables from ExpressionSet metadata, and simple exporting of data
+tables for non R-users.

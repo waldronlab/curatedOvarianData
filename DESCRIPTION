@@ -25,7 +25,7 @@ Description: The curatedOvarianData package provides data for gene
     expression analysis in patients with ovarian cancer.
 Depends:
     Biobase,
-    R (>= 4.5.0)
+    R (>= 4.6.0)
 Imports:
     BiocGenerics
 Suggests:
@@ -44,5 +44,8 @@ License: Artistic-2.0
 VignetteBuilder:
     knitr
 URL: http://bcb.dfci.harvard.edu/ovariancancer
-biocViews: ExperimentData, RNASeqData, CancerData, OvarianCancerData,
+biocViews:
+    ExperimentData,
+    RNASeqData,
+    CancerData,
     MicroarrayData
