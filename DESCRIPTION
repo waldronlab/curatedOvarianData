@@ -1,7 +1,7 @@
 Package: curatedOvarianData
 Type: Package
 Title: Clinically Annotated Data for the Ovarian Cancer Transcriptome
-Version: 1.49.0
+Version: 1.49.1
 Date: 2025-05-05
 Authors@R: c(
     person("Benjamin", "Ganzfried", role = "aut"),
@@ -16,16 +16,14 @@ Authors@R: c(
     person("Michael", "Birrer", role = "aut"),
     person("Giovanni", "Parmigiani", role = "aut"),
     person("Curtis", "Huttenhower", role = "aut"),
-    person("Levi", "Waldron", , "lwaldron.research@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0003-2725-0694")),
-    person("NCI", role = "fnd",
-           comment = c(GrantNo. = "U24CA289073"))
+     person("Levi", "Waldron", email = "lwaldron.research@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-2725-0694")),
+    person("National Cancer Institute", role = "fnd", comment = "5U24CA180996")
   )
 Description: The curatedOvarianData package provides data for gene
     expression analysis in patients with ovarian cancer.
 Depends:
     Biobase,
-    R (>= 4.5.0)
+    R (>= 4.0.0)
 Imports:
     BiocGenerics
 Suggests:
@@ -44,5 +42,8 @@ License: Artistic-2.0
 VignetteBuilder:
     knitr
 URL: http://bcb.dfci.harvard.edu/ovariancancer
-biocViews: ExperimentData, RNASeqData, CancerData, OvarianCancerData,
+biocViews:
+    ExperimentData,
+    RNASeqData,
+    CancerData,
     MicroarrayData
