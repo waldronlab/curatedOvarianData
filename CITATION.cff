@@ -1,0 +1,122 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "curatedOvarianData" in publications use:'
+type: software
+license: Artistic-2.0
+title: 'curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome'
+version: 1.51.1
+doi: 10.1093/database/bat013
+abstract: The curatedOvarianData package provides data for gene expression analysis
+  in patients with ovarian cancer.
+authors:
+- family-names: Ganzfried
+  given-names: Benjamin
+- family-names: Riester
+  given-names: Markus
+- family-names: Skates
+  given-names: Steve
+- family-names: Wang
+  given-names: Victoria
+- family-names: Risch
+  given-names: Thomas
+- family-names: Haibe-Kains
+  given-names: Benjamin
+- family-names: Tyekucheva
+  given-names: Svitlana
+- family-names: Ding
+  given-names: Jie
+- family-names: Jazic
+  given-names: Ina
+- family-names: Birrer
+  given-names: Michael
+- family-names: Parmigiani
+  given-names: Giovanni
+- family-names: Huttenhower
+  given-names: Curtis
+- family-names: Waldron
+  given-names: Levi
+  email: lwaldron.research@gmail.com
+  orcid: https://orcid.org/0000-0003-2725-0694
+preferred-citation:
+  type: article
+  title: 'curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome'
+  authors:
+  - family-names: Ganzfried
+    given-names: Benjamin Frederick
+  - family-names: Riester
+    given-names: Markus
+  - family-names: Haibe-Kains
+    given-names: Benjamin
+  - family-names: Risch
+    given-names: Thomas
+  - family-names: Tyekucheva
+    given-names: Svitlana
+  - family-names: Jazic
+    given-names: Ina
+  - family-names: Wang
+    given-names: Xin Victoria
+  - family-names: Ahmadifar
+    given-names: Mahnaz
+  - family-names: Birrer
+    given-names: Michael
+  - family-names: Parmigiani
+    given-names: Giovanni
+  - family-names: Huttenhower
+    given-names: Curtis
+  - family-names: Waldron
+    given-names: Levi
+    email: lwaldron.research@gmail.com
+    orcid: https://orcid.org/0000-0003-2725-0694
+  journal: Database
+  volume: '2013'
+  year: '2013'
+  doi: 10.1093/database/bat013
+  url: https://academic.oup.com/database/article/doi/10.1093/database/bat013/379438
+repository: https://bioconductor.org/
+url: http://bcb.dfci.harvard.edu/ovariancancer
+date-released: '2025-05-05'
+contact:
+- family-names: Waldron
+  given-names: Levi
+  email: lwaldron.research@gmail.com
+  orcid: https://orcid.org/0000-0003-2725-0694
+references:
+- type: manual
+  title: 'curatedOvarianData: Clinically Annotated Data for the Ovarian Cancer Transcriptome'
+  authors:
+  - family-names: Ganzfried
+    given-names: Benjamin
+  - family-names: Riester
+    given-names: Markus
+  - family-names: Skates
+    given-names: Steve
+  - family-names: Wang
+    given-names: Victoria
+  - family-names: Risch
+    given-names: Thomas
+  - family-names: Haibe-Kains
+    given-names: Benjamin
+  - family-names: Tyekucheva
+    given-names: Svitlana
+  - family-names: Ding
+    given-names: Jie
+  - family-names: Jazic
+    given-names: Ina
+  - family-names: Birrer
+    given-names: Michael
+  - family-names: Parmigiani
+    given-names: Giovanni
+  - family-names: Huttenhower
+    given-names: Curtis
+  - family-names: Waldron
+    given-names: Levi
+    email: lwaldron.research@gmail.com
+    orcid: https://orcid.org/0000-0003-2725-0694
+  year: '2025'
+  notes: R package version 1.51.1
+  url: http://bcb.dfci.harvard.edu/ovariancancer
+
