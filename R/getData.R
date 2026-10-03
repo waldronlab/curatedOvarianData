@@ -37,6 +37,21 @@
         message("Downloading ", name, " (",
                 round(meta$size_bytes[i] / 2^20, 1), " MB) from Zenodo...")
     path <- unname(BiocFileCache::bfcrpath(bfc, meta$url[i]))
+    if (!fresh && !isTRUE(file.size(path) == meta$size_bytes[i])) {
+        # cached file was truncated or modified after download: evict and
+        # re-download (cheap size check; full md5 runs after each download)
+        res <- BiocFileCache::bfcquery(bfc, meta$url[i], field = "fpath",
+                                       exact = TRUE)
+        if (nrow(res))
+            BiocFileCache::bfcremove(bfc, res$rid)
+        if (retry) {
+            message("Cached copy of ", name,
+                    " has the wrong size; re-downloading...")
+            return(.getDataFile(name, retry = FALSE))
+        }
+        stop("Cached file for '", name, "' has the wrong size and could ",
+             "not be refreshed.")
+    }
     if (fresh) {
         md5 <- unname(tools::md5sum(path))
         if (!identical(md5, meta$md5[i])) {

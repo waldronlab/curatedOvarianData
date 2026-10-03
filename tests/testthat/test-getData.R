@@ -56,10 +56,17 @@ test_that("unknown dataset names give an informative error", {
                  "Unknown dataset")
 })
 
-test_that("data() stubs create a binding", {
+test_that("data() stubs create a working binding", {
     e <- new.env()
     data("GSE30161_eset", package = "curatedOvarianData", envir = e)
     expect_true(exists("GSE30161_eset", envir = e))
+    # force the delayed binding under the check guard so .stubLoad() runs
+    # and resolves to the offline fixture (no network)
+    old <- Sys.getenv("_R_CHECK_PACKAGE_NAME_", unset = NA)
+    Sys.setenv("_R_CHECK_PACKAGE_NAME_" = "curatedOvarianData")
+    on.exit(if (is.na(old)) Sys.unsetenv("_R_CHECK_PACKAGE_NAME_") else
+        Sys.setenv("_R_CHECK_PACKAGE_NAME_" = old), add = TRUE)
+    expect_s4_class(e$GSE30161_eset, "ExpressionSet")
 })
 
 test_that("full download works (opt-in; set RUN_FULL_DOWNLOAD_TESTS=1)", {
@@ -70,7 +77,7 @@ test_that("full download works (opt-in; set RUN_FULL_DOWNLOAD_TESTS=1)", {
     eset <- curatedOvarianData("GSE30009_eset")
     expect_s4_class(eset, "ExpressionSet")
     # second call must hit the cache (no download message)
-    expect_silent(suppressMessages(
-        eset2 <- curatedOvarianData("GSE30009_eset")))
+    expect_silent(
+        eset2 <- curatedOvarianData("GSE30009_eset"))
     expect_identical(dim(eset), dim(eset2))
 })

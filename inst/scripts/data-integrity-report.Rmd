@@ -78,11 +78,15 @@ merged
 ```{r smoke-test}
 getter <- get(pkg, envir = asNamespace(pkg))
 smallest <- manifest$dataset[which.min(manifest$size_bytes)]
-unlink(tools::R_user_dir(pkg, "cache"), recursive = TRUE)
+# use a throwaway cache so the user's real package cache is untouched
+old_cache <- Sys.getenv("R_USER_CACHE_DIR", unset = NA)
+Sys.setenv(R_USER_CACHE_DIR = tempfile("cache-"))
 eset <- getter(smallest)              # downloads
 stopifnot(is(eset, "ExpressionSet"))
 eset2 <- getter(smallest)             # must hit the cache silently
 stopifnot(identical(dim(eset), dim(eset2)))
+if (is.na(old_cache)) Sys.unsetenv("R_USER_CACHE_DIR") else
+    Sys.setenv(R_USER_CACHE_DIR = old_cache)
 dim(eset)
 ```
 
