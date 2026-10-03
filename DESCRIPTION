@@ -57,7 +57,9 @@ biocViews:
     CancerData,
     OvarianCancerData,
     MicroarrayData,
+    miRNAData,
     RNASeqData,
+    ArrayExpress,
     GEO
 BuildResaveData: no
 Config/testthat/edition: 3

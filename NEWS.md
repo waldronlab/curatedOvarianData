@@ -1,12 +1,3 @@
-# curatedOvarianData 1.52.0 (continued)
-
-## DOCUMENTATION AND METADATA
-
-* Repaired UTF-8 transcoding damage ("??" artifacts) in 7 dataset man
-  pages (author names, copyright marks, and statistical symbols).
-* biocViews extended to ExpressionData, OvarianCancerData, and GEO for
-  better discoverability.
-
 # curatedOvarianData 1.52.0
 
 ## SIGNIFICANT USER-VISIBLE CHANGES
@@ -37,6 +28,13 @@
 * Explicit NAMESPACE exporting only `curatedOvarianData()`.
 * Replaced the dead DFCI URL with the GitHub repository URL and added
   BugReports; removed the committed `build/` PDF.
+
+## DOCUMENTATION AND METADATA
+
+* Repaired UTF-8 transcoding damage ("??" artifacts) in 7 dataset man
+  pages (author names, copyright marks, and statistical symbols).
+* biocViews extended to ExpressionData, OvarianCancerData, miRNAData,
+  ArrayExpress, and GEO for better discoverability.
 
 ### Changes in version 1.49.1
 * Modernized package for current Bioconductor standards.
