@@ -8,7 +8,7 @@
 \preformatted{
 experimentData(eset):
 Experiment data
-  Experimenter name: Ferriss JS, Kim Y, Duska L, Birrer M, Levine DA, Moskaluk C,Theodorescu D, Lee JK 
+  Experimenter name: Ferriss JS, Kim Y, Duska L, Birrer M, Levine DA, Moskaluk C, Theodorescu D, Lee JK 
   Laboratory: Ferriss, Lee 2012 
   Contact information:  
   Title: Multi-gene expression predictors of single drug responses to adjuvant chemotherapy in ovarian carcinoma: predicting platinum resistance. 
