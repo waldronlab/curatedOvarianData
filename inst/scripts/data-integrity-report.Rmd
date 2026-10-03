@@ -36,7 +36,6 @@ stopifnot(requireNamespace(pkg))
 pre <- tempfile("pre-refactor-")
 system2("git", c("worktree", "add", "--detach", pre, "pre-zenodo-refactor"),
         stdout = FALSE)
-on.exit(system2("git", c("worktree", "remove", "--force", pre)), add = TRUE)
 
 manifest <- read.csv(file.path("..", "extdata", "zenodo-manifest.csv"))
 loadOne <- function(path) {
@@ -51,6 +50,7 @@ cmp <- vapply(manifest$dataset, function(nm) {
         identical(annotation(old), annotation(new)) &&
         isTRUE(all.equal(experimentData(old), experimentData(new)))
 }, logical(1))
+system2("git", c("worktree", "remove", "--force", pre))
 data.frame(dataset = manifest$dataset, identical = cmp)
 stopifnot(all(cmp))
 ```

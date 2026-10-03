@@ -24,7 +24,11 @@ outdir <- file.path("..", paste0(pkg, "-zenodo-upload"))
 stubdir <- file.path(outdir, "stubs")
 dir.create(stubdir, recursive = TRUE, showWarnings = FALSE)
 
+## enumerate from data/ before the refactor, or from the already-compressed
+## upload directory when re-running to finalize URLs
 rdas <- sort(list.files("data", pattern = "\\.rda$"))
+if (length(rdas) == 0L)
+    rdas <- sort(list.files(outdir, pattern = "\\.rda$"))
 stopifnot(length(rdas) > 0L)
 
 rows <- lapply(rdas, function(f) {
