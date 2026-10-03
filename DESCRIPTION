@@ -1,8 +1,8 @@
 Package: curatedOvarianData
 Type: Package
 Title: Clinically Annotated Data for the Ovarian Cancer Transcriptome
-Version: 1.51.1
-Date: 2025-05-05
+Version: 1.51.2
+Date: 2026-10-03
 Authors@R: c(
     person("Benjamin", "Ganzfried", role = "aut"),
     person("Markus", "Riester", role = "aut"),
@@ -21,13 +21,19 @@ Authors@R: c(
     person("NCI", role = "fnd",
            comment = c(GrantNo. = "U24CA289073"))
   )
-Description: The curatedOvarianData package provides data for gene
-    expression analysis in patients with ovarian cancer.
+Description: Manually curated human ovarian cancer ExpressionSet objects
+    from 30 studies, with uniformly processed expression data and
+    standardized clinical metadata including survival outcomes. Datasets
+    are hosted on Zenodo and downloaded on first use, then cached locally
+    with BiocFileCache. Includes a configurable script for rule-based
+    creation of filtered dataset lists for meta-analysis.
 Depends:
     Biobase,
     R (>= 4.6.0)
 Imports:
-    BiocGenerics
+    BiocFileCache,
+    tools,
+    utils
 Suggests:
     BiocStyle,
     futile.logger,
@@ -36,16 +42,19 @@ Suggests:
     logging,
     metafor,
     rmarkdown,
-    RUnit,
+    testthat (>= 3.0.0),
     survival,
     sva,
     xtable
 License: Artistic-2.0
 VignetteBuilder:
     knitr
-URL: http://bcb.dfci.harvard.edu/ovariancancer
+URL: https://github.com/waldronlab/curatedOvarianData
+BugReports: https://github.com/waldronlab/curatedOvarianData/issues
 biocViews:
     ExperimentData,
     RNASeqData,
     CancerData,
     MicroarrayData
+BuildResaveData: no
+Config/testthat/edition: 3

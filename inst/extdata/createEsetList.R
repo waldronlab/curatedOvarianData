@@ -86,7 +86,10 @@ expandProbesets <- function (eset, sep = "///"){
 ## -----------------------------------------------------------------------------
 ##load the esets
 ## -----------------------------------------------------------------------------
-data(list=data(package=package.name)[[3]][,3])
+if (!exists("test.mode")) test.mode <- FALSE
+for (.nm in do.call(package.name, list()))
+    assign(.nm, do.call(package.name, list(datasets = .nm, test = test.mode)))
+rm(.nm)
 
 strEsets <- ls(pattern="^.*_eset$")
 esets <- list()
@@ -232,8 +235,9 @@ if(exists("keep.common.only") && keep.common.only){
     })
 }
 
-ids.with.missing.data <- which(sapply(esets, function(X)
-                                      sum(!complete.cases(exprs(X))) > 0))
+ids.with.missing.data <- which(vapply(esets, function(X)
+                                      sum(!complete.cases(exprs(X))) > 0,
+                                      logical(1)))
 loginfo(paste("Ids with missing data:", paste(names(ids.with.missing.data),
                                               collapse=", ")))
 

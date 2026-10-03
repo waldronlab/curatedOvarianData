@@ -1,1 +1,5 @@
-# This package contains only data, no exports
+export(curatedOvarianData)
+import(Biobase)
+importFrom(BiocFileCache, BiocFileCache, bfcrpath, bfcquery, bfcremove)
+importFrom(utils, read.csv)
+importFrom(tools, md5sum, R_user_dir)

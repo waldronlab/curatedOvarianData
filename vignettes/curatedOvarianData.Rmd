@@ -35,12 +35,27 @@ The `curatedOvarianData` package is published in the journal
 DATABASE (@ganzfried2013). Note the existence also of
 `curatedCRCData` and `curatedBladderData`.
 
-Please see http://bcb.dfci.harvard.edu/ovariancancer for alterative
-versions of this package, differing in how redundant probe sets are
-dealt with.
-
 In this vignette, we give a short tour of the package and will show how to use
 it efficiently.
+
+## Data access and caching
+
+As of version 1.52, the datasets are no longer stored inside the package:
+they are hosted on [Zenodo](https://zenodo.org/) and downloaded
+individually the first time they are requested, then cached locally with
+`r BiocStyle::Biocpkg("BiocFileCache")` so later uses need no network
+access. The cache lives in a package-specific directory,
+`tools::R_user_dir("curatedOvarianData", "cache")`; to reclaim disk
+space, delete that directory or manage it with *BiocFileCache*.
+
+The legacy `data(TCGA_eset)` syntax still works (it downloads through
+the same cache) but is deprecated and will be removed in a future
+release; please use the `curatedOvarianData()` function shown below.
+
+Throughout this vignette we set `test = TRUE` (and `test.mode <- TRUE`),
+which loads small offline subsets of each dataset that are bundled with
+the package, so that the vignette builds without downloading data. For
+real analyses, omit these settings to work with the full datasets.
 
 ## Load TCGA data
 
@@ -52,16 +67,18 @@ library(sva)
 library(logging)
 ```
 
-To get a listing of all the datasets, use the `data` function:
+To get a listing of all the datasets, call `curatedOvarianData()` with
+no arguments:
 
-```{r example1tcgastep2_list, eval=FALSE}
-data(package="curatedOvarianData")
+```{r example1tcgastep2_list}
+curatedOvarianData()
 ```
 
-Now to load the TCGA data, we use the `data` function again:
+Now to load the TCGA data (drop `test = TRUE` to download the full
+dataset):
 
 ```{r example1tcgastep2}
-data(TCGA_eset)
+TCGA_eset <- curatedOvarianData("TCGA_eset", test = TRUE)
 TCGA_eset
 ```
 
@@ -82,6 +99,10 @@ for example to remove early stage and normal samples.
 ```{r example2loadstep1}
 source(system.file("extdata",
 "patientselection.config",package="curatedOvarianData"))
+test.mode <- TRUE  # use the bundled offline subsets in this vignette
+# relax the filters so the small subsets pass them; for real analyses,
+# keep the config defaults
+min.sample.size <- 20; min.number.of.events <- 5; min.number.of.genes <- 150
 ls()
 ```
 
@@ -256,8 +277,8 @@ In Figure 4, we combined two datasets from different platforms, resulting in a
 huge batch effect.
 
 ```{r boxplot1, fig.width=8, fig.height=6}
-data(E.MTAB.386_eset)
-data(GSE30161_eset)
+E.MTAB.386_eset <- curatedOvarianData("E.MTAB.386_eset", test = TRUE)
+GSE30161_eset <- curatedOvarianData("GSE30161_eset", test = TRUE)
 X <- combine2(E.MTAB.386_eset, GSE30161_eset)
 boxplot(exprs(X))
 ```
@@ -337,10 +358,8 @@ looking at the featureData of the Expressionset, e.g.:
 head(pData(featureData(GSE18520_eset)))
 ```
 
-The full, unmerged ExpressionSets are available through the
-FULLVcuratedOvarianData package at
-http://bcb.dfci.harvard.edu/ovariancancer/. Probeset to gene maps are
-again provided in the featureData of those `ExpressionSet`s.
+The historical FULLVcuratedOvarianData package with full, unmerged
+ExpressionSets is no longer distributed.
 Where official Bioconductor annotation packages are available for the
 array, these are stored in the `ExpressionSet` annotation
 slots, e.g.:
@@ -358,6 +377,7 @@ work by default.
 rm(list=ls())
 source(system.file("extdata",
     "patientselection_all.config",package="curatedOvarianData"))
+test.mode <- TRUE  # use the bundled offline subsets in this vignette
 source(system.file("extdata", "createEsetList.R", package =
     "curatedOvarianData"))
 ```
@@ -429,7 +449,7 @@ a simple way to do it. For one dataset:
 
 ```{r simplygetdata, eval=FALSE}
 library(curatedOvarianData)
-data(GSE30161_eset)
+GSE30161_eset <- curatedOvarianData("GSE30161_eset")
 write.csv(exprs(GSE30161_eset), file="GSE30161_eset_exprs.csv")
 write.csv(pData(GSE30161_eset), file="GSE30161_eset_clindata.csv")
 ```
@@ -437,12 +457,12 @@ write.csv(pData(GSE30161_eset), file="GSE30161_eset_clindata.csv")
 Or for several datasets:
 
 ```{r simplyseveraldatasets, eval=FALSE}
-data.to.fetch <- c("GSE30161_eset", "E.MTAB.386_eset")
-for (onedata in data.to.fetch){
-    print(paste("Fetching", onedata))
-    data(list=onedata)
-    write.csv(exprs(get(onedata)), file=paste(onedata, "_exprs.csv", sep=""))
-    write.csv(pData(get(onedata)), file=paste(onedata, "_clindata.csv", sep=""))
+data.to.fetch <- curatedOvarianData(c("GSE30161_eset", "E.MTAB.386_eset"))
+for (onedata in names(data.to.fetch)){
+    write.csv(exprs(data.to.fetch[[onedata]]),
+              file=paste(onedata, "_exprs.csv", sep=""))
+    write.csv(pData(data.to.fetch[[onedata]]),
+              file=paste(onedata, "_clindata.csv", sep=""))
 }
 ```
 
