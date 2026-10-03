@@ -8,7 +8,7 @@
 \preformatted{
 experimentData(eset):
 Experiment data
-  Experimenter name: Denkert C, Budczies J, Darb-Esfahani S, Gy??rffy B et al. A prognostic gene expression index in ovarian cancer - validation across different independent data sets. J Pathol 2009 Jun;218(2):273-80. 
+  Experimenter name: Denkert C, Budczies J, Darb-Esfahani S, Gyorffy B et al. A prognostic gene expression index in ovarian cancer - validation across different independent data sets. J Pathol 2009 Jun;218(2):273-80. 
   Laboratory: Denkert, Lage 2009 
   Contact information:  
   Title: A prognostic gene expression index in ovarian cancer - validation across different independent data sets. 

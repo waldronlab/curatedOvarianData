@@ -1,3 +1,12 @@
+# curatedOvarianData 1.52.0 (continued)
+
+## DOCUMENTATION AND METADATA
+
+* Repaired UTF-8 transcoding damage ("??" artifacts) in 7 dataset man
+  pages (author names, copyright marks, and statistical symbols).
+* biocViews extended to ExpressionData, OvarianCancerData, and GEO for
+  better discoverability.
+
 # curatedOvarianData 1.52.0
 
 ## SIGNIFICANT USER-VISIBLE CHANGES
