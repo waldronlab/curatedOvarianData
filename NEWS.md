@@ -1,3 +1,34 @@
+# curatedOvarianData 1.52.0
+
+## SIGNIFICANT USER-VISIBLE CHANGES
+
+* The 30 datasets are no longer stored inside the package: they are hosted
+  on Zenodo and downloaded individually on first use, then cached locally
+  with `BiocFileCache`. This shrinks the installed package from ~400 MB to
+  a few MB.
+* New exported function `curatedOvarianData()`: call it with no arguments to
+  list available datasets, with one dataset name to get an `ExpressionSet`,
+  or with several names to get a named list. `test = TRUE` loads small
+  offline subsets bundled with the package (used by examples, tests, and
+  the vignette).
+* Legacy `data(TCGA_eset)` access still works (it downloads through the
+  same cache, deferred until the object is first used) but is deprecated
+  and will be removed in a future release.
+* `inst/extdata/createEsetList.R` now loads datasets through the getter; a
+  new `test.mode` option in the patientselection config files selects the
+  offline subsets.
+* The cache is package-specific (`tools::R_user_dir("curatedOvarianData",
+  "cache")`); delete that directory to reclaim disk space. Downloads are
+  verified against md5 checksums recorded in
+  `inst/extdata/zenodo-manifest.csv`.
+
+## INTERNAL
+
+* Replaced the never-executed RUnit scaffolding with testthat tests.
+* Explicit NAMESPACE exporting only `curatedOvarianData()`.
+* Replaced the dead DFCI URL with the GitHub repository URL and added
+  BugReports; removed the committed `build/` PDF.
+
 ### Changes in version 1.49.1
 * Modernized package for current Bioconductor standards.
 * Updated DESCRIPTION with Authors@R, standard version and correct biocViews.

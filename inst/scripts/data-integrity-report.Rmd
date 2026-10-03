@@ -1,0 +1,91 @@
+---
+title: "Data integrity report: Zenodo offloading"
+output: html_document
+params:
+  package: "curatedOvarianData"
+  upload_dir: "../../../curatedOvarianData-zenodo-upload"
+---
+
+<!-- Verifies the Zenodo data offloading, run manually from inst/scripts/
+     of a package checkout (not built with the package vignettes):
+
+     1. every xz re-serialized object uploaded to Zenodo is identical to
+        the object shipped in the last pre-refactor package version
+        (git tag pre-zenodo-refactor);
+     2. the md5 checksums in inst/extdata/zenodo-manifest.csv match both
+        the local upload files and the checksums Zenodo reports;
+     3. one real download through the getter works and hits the cache on
+        the second call.
+
+     Because the manifest md5s equal the md5s of byte-identical uploads,
+     passing 1 + 2 proves every Zenodo file; only one download needs to
+     be exercised end to end.
+
+     NOTE: intentionally duplicated in curatedCRCData. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+suppressPackageStartupMessages(library(Biobase))
+pkg <- params$package
+stopifnot(requireNamespace(pkg))
+```
+
+# 1. Uploaded objects vs pre-refactor package objects
+
+```{r compare-objects}
+pre <- tempfile("pre-refactor-")
+system2("git", c("worktree", "add", "--detach", pre, "pre-zenodo-refactor"),
+        stdout = FALSE)
+
+manifest <- read.csv(file.path("..", "extdata", "zenodo-manifest.csv"))
+loadOne <- function(path) {
+    env <- new.env(); nm <- load(path, envir = env); get(nm[1], envir = env)
+}
+cmp <- vapply(manifest$dataset, function(nm) {
+    old <- loadOne(file.path(pre, "data", paste0(nm, ".rda")))
+    new <- loadOne(file.path(params$upload_dir, paste0(nm, ".rda")))
+    isTRUE(all.equal(exprs(old), exprs(new))) &&
+        isTRUE(all.equal(pData(old), pData(new))) &&
+        isTRUE(all.equal(fData(old), fData(new))) &&
+        identical(annotation(old), annotation(new)) &&
+        isTRUE(all.equal(experimentData(old), experimentData(new)))
+}, logical(1))
+system2("git", c("worktree", "remove", "--force", pre))
+data.frame(dataset = manifest$dataset, identical = cmp)
+stopifnot(all(cmp))
+```
+
+# 2. Manifest md5s vs local uploads and Zenodo
+
+```{r compare-md5}
+local_md5 <- tools::md5sum(file.path(params$upload_dir, manifest$filename))
+stopifnot(identical(unname(local_md5), manifest$md5))
+
+record <- unique(sub(".*records/([0-9A-Za-z_]+)/.*", "\\1", manifest$url))
+stopifnot(length(record) == 1L)
+api <- jsonlite::fromJSON(paste0("https://zenodo.org/api/records/", record))
+zen <- data.frame(filename = api$files$key,
+                  md5 = sub("^md5:", "", api$files$checksum))
+merged <- merge(manifest[, c("filename", "md5")], zen, by = "filename",
+                suffixes = c(".manifest", ".zenodo"))
+stopifnot(nrow(merged) == nrow(manifest),
+          identical(merged$md5.manifest, merged$md5.zenodo))
+merged
+```
+
+# 3. Download smoke test
+
+```{r smoke-test}
+getter <- get(pkg, envir = asNamespace(pkg))
+smallest <- manifest$dataset[which.min(manifest$size_bytes)]
+unlink(tools::R_user_dir(pkg, "cache"), recursive = TRUE)
+eset <- getter(smallest)              # downloads
+stopifnot(is(eset, "ExpressionSet"))
+eset2 <- getter(smallest)             # must hit the cache silently
+stopifnot(identical(dim(eset), dim(eset2)))
+dim(eset)
+```
+
+```{r session-info}
+sessionInfo()
+```

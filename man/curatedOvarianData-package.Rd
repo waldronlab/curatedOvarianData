@@ -1,29 +1,23 @@
 \name{curatedOvarianData-package}
-\alias{curatedOvarianData}
+\alias{curatedOvarianData-package}
 \docType{package}
 \title{Clinically Annotated Data for the Ovarian Cancer Transcriptome}
 \description{The curatedOvarianData package provides manually curated
   clinical data, uniformly processed expression data, and convenience
   functions for gene expression analysis in patients with ovarian cancer.}
 \details{
-\tabular{ll}{
-Package: \tab curatedOvarianData\cr
-Type: \tab Package\cr
-Version: \tab \Sexpr{packageDescription("curatedOvarianData")$Version}\cr
-Date: \tab \Sexpr{packageDescription("curatedOvarianData")$Date}\cr
-License: \tab Artistic-2.0\cr
-Depends: \tab R (>= 2.10.0), affy\cr
-}
+Datasets are hosted on Zenodo and downloaded on first use with
+\code{\link{curatedOvarianData}()}, which caches them locally with
+\pkg{BiocFileCache}. Legacy \code{data()} access still works but is
+deprecated and downloads through the same mechanism. See the package
+vignette for rule-based creation of a list of filtered datasets.
 
-Please see http://bcb.dfci.harvard.edu/ovariancancer for alterative
-versions of this package, differing in how redundant probe sets are
-dealt with.  In the curatedOvarianData version, each gene is represented
-by the gene with maximum mean.  In NormalizerVcuratedOvarianData, each
-gene is represented by the mean of the probesets after removing "noisy"
-probesets (see the Normalizer function of the Sleipnir library for
-computational biology), and in FULLVcuratedOvarianData, no collapsing of
-probe sets is done, but a map is provided to allow the user to do so
-by their method of choice through featureData(eset).
+In this package, redundant probe sets are collapsed so that each gene
+is represented by the probe set with maximum mean. Historical
+alternative versions (NormalizerVcuratedOvarianData, where each gene is
+the mean of probesets after removing "noisy" probesets, and
+FULLVcuratedOvarianData, with no collapsing but a map in
+featureData(eset)) are no longer distributed.
 
 In the "Available sample meta-data" sections of each dataset, please refer to the following key.
 
@@ -117,12 +111,14 @@ Michael Birrer, Giovanni Parmigiani, Levi Waldron
 
 Department of Biostatistics and Computational Biology, Dana-Farber Cancer Institute, Harvard School of Public Health
 
-Maintainer: Levi Waldron <levi@jimmy.harvard.edu>
+Maintainer: Levi Waldron <lwaldron.research@gmail.com>
 }
 
 \examples{
 ##List all datasets:
-data(package="curatedOvarianData")
+curatedOvarianData()
+##Load one dataset (test=TRUE uses a small offline subset):
+eset <- curatedOvarianData("GSE30161_eset", test = TRUE)
 ##
 ##See the actual template used for syntax checking of clinical metadata:
 template.file <- system.file("extdata/template_ov.csv", package = "curatedOvarianData")
