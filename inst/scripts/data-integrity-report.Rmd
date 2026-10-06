@@ -58,18 +58,24 @@ stopifnot(all(cmp))
 # 2. Manifest md5s vs local uploads and Zenodo
 
 ```{r compare-md5}
-local_md5 <- tools::md5sum(file.path(params$upload_dir, manifest$filename))
-stopifnot(identical(unname(local_md5), manifest$md5))
+local_path <- file.path(params$upload_dir, manifest$filename)
+stopifnot(identical(unname(tools::md5sum(local_path)), manifest$md5))
+# size_bytes is not cosmetic: R/getData.R compares it against the cached
+# file on every cache hit, so a wrong size silently evicts and re-downloads
+# a perfectly good file on every call.
+stopifnot(identical(unname(file.size(local_path)), as.numeric(manifest$size_bytes)))
 
 record <- unique(sub(".*records/([0-9A-Za-z_]+)/.*", "\\1", manifest$url))
 stopifnot(length(record) == 1L)
 api <- jsonlite::fromJSON(paste0("https://zenodo.org/api/records/", record))
 zen <- data.frame(filename = api$files$key,
-                  md5 = sub("^md5:", "", api$files$checksum))
-merged <- merge(manifest[, c("filename", "md5")], zen, by = "filename",
-                suffixes = c(".manifest", ".zenodo"))
+                  md5 = sub("^md5:", "", api$files$checksum),
+                  size = as.numeric(api$files$size))
+merged <- merge(manifest[, c("filename", "md5", "size_bytes")], zen,
+                by = "filename", suffixes = c(".manifest", ".zenodo"))
 stopifnot(nrow(merged) == nrow(manifest),
-          identical(merged$md5.manifest, merged$md5.zenodo))
+          identical(merged$md5.manifest, merged$md5.zenodo),
+          identical(as.numeric(merged$size_bytes), merged$size))
 merged
 ```
 

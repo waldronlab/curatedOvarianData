@@ -24,6 +24,12 @@
 
 ## INTERNAL
 
+* `inst/scripts/data-integrity-report.Rmd` now verifies `size_bytes` as
+  well as md5. `R/getData.R` compares `size_bytes` against the cached file
+  on every cache hit, so a wrong size in the manifest would have silently
+  evicted and re-downloaded a valid file on every call. Caught by Copilot
+  review on lima1/curatedBladderData#3.
+
 * Replaced the never-executed RUnit scaffolding with testthat tests.
 * Explicit NAMESPACE exporting only `curatedOvarianData()`.
 * Replaced the dead DFCI URL with the GitHub repository URL and added
