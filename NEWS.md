@@ -5,7 +5,7 @@
 * The 30 datasets are no longer stored inside the package: they are hosted
   on Zenodo and downloaded individually on first use, then cached locally
   with `BiocFileCache`. This shrinks the installed package from ~400 MB to
-  a few MB.
+  a few MB (#9, @jwokaty).
 * New exported function `curatedOvarianData()`: call it with no arguments to
   list available datasets, with one dataset name to get an `ExpressionSet`,
   or with several names to get a named list. `test = TRUE` loads small
@@ -22,25 +22,20 @@
   verified against md5 checksums recorded in
   `inst/extdata/zenodo-manifest.csv`.
 
-## INTERNAL
+## BUG FIXES AND MINOR IMPROVEMENTS
 
-* `inst/scripts/data-integrity-report.Rmd` now verifies `size_bytes` as
-  well as md5. `R/getData.R` compares `size_bytes` against the cached file
-  on every cache hit, so a wrong size in the manifest would have silently
-  evicted and re-downloaded a valid file on every call. Caught by Copilot
-  review on lima1/curatedBladderData#3.
-
-* Replaced the never-executed RUnit scaffolding with testthat tests.
-* Explicit NAMESPACE exporting only `curatedOvarianData()`.
-* Replaced the dead DFCI URL with the GitHub repository URL and added
-  BugReports; removed the committed `build/` PDF.
-
-## DOCUMENTATION AND METADATA
-
-* Repaired UTF-8 transcoding damage ("??" artifacts) in 7 dataset man
-  pages (author names, copyright marks, and statistical symbols).
-* biocViews extended to ExpressionData, OvarianCancerData, miRNAData,
-  ArrayExpress, and GEO for better discoverability.
+* Download integrity checks verify `size_bytes` as well as md5, so a wrong
+  size in the manifest can no longer evict a valid cached file on every
+  call (#10, @lwaldron).
+* The never-executed RUnit scaffolding is replaced with testthat tests, and
+  NAMESPACE exports only `curatedOvarianData()` (#10, @lwaldron).
+* The package URL points to the GitHub repository and `BugReports` is added
+  (#10, @lwaldron).
+* Garbled characters ("??") in 7 dataset man pages are repaired
+  (#11, @lwaldron).
+* `biocViews` are extended
+  (ExpressionData, OvarianCancerData, miRNAData, ArrayExpress, GEO)
+  for better discoverability (#11, @lwaldron).
 
 ### Changes in version 1.49.1
 * Modernized package for current Bioconductor standards.
